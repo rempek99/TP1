@@ -1,0 +1,9 @@
+D:\Studia\5_SEMESTR\TP\TP1\TP1\bin\Debug\netstandard2.0\TP1.deps.json
+D:\Studia\5_SEMESTR\TP\TP1\TP1\bin\Debug\netstandard2.0\TP1.dll
+D:\Studia\5_SEMESTR\TP\TP1\TP1\bin\Debug\netstandard2.0\TP1.pdb
+D:\Studia\5_SEMESTR\TP\TP1\TP1\obj\Debug\netstandard2.0\TP1.AssemblyInfoInputs.cache
+D:\Studia\5_SEMESTR\TP\TP1\TP1\obj\Debug\netstandard2.0\TP1.AssemblyInfo.cs
+D:\Studia\5_SEMESTR\TP\TP1\TP1\obj\Debug\netstandard2.0\TP1.csproj.CoreCompileInputs.cache
+D:\Studia\5_SEMESTR\TP\TP1\TP1\obj\Debug\netstandard2.0\TP1.dll
+D:\Studia\5_SEMESTR\TP\TP1\TP1\obj\Debug\netstandard2.0\TP1.pdb
+D:\Studia\5_SEMESTR\TP\TP1\TP1\obj\Debug\netstandard2.0\TP1.csprojAssemblyReference.cache

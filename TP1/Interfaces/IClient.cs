@@ -4,7 +4,8 @@ using System.Text;
 
 namespace TP1
 {
-    class Wykaz
-    {
+    public interface IClient
+    { 
+        float GetDiscount();
     }
 }
