@@ -7,81 +7,200 @@ namespace TP1.Logic
 {
     public class LibraryManager : DataService
     {
-        public override void AddNewBookItem(string title, string author)
+        public LibraryManager(IDataRepository dataRepository) : base(dataRepository)
         {
-            dataRepository.AddBookItem(title, author);
         }
 
-        public override void AddNewReader(string name, string lastName, IProfiler profile)
+        // READER
+        public override bool AddNewReader(string name, string lastName, IProfiler profile)
         {
+            if (dataRepository.FindReader(name, lastName, profile) >= 0)
+                return false;
+
             dataRepository.AddReader(name, lastName, profile);
+            return true;
         }
-
-        public override void ChangeBookItemData(int bookKey, string title, string author)
+        public override bool RemoveReader(int readerIndex)
         {
-            dataRepository.UpdateBookItem(bookKey, title, author);
+            try 
+            {
+                dataRepository.RemoveReader(readerIndex);
+            }
+            catch(IndexOutOfRangeException)
+            {
+                return false;
+            }
+            return true;
         }
-
-        public override void ChangeReaderData(int readerIndex, string name, string lastName)
+        public override bool ChangeReaderData(int readerIndex, string name, string lastName)
         {
-            dataRepository.UpdateReader(dataRepository.GetReader(readerIndex), name, lastName);
+            try
+            {
+                dataRepository.UpdateReader(readerIndex, name, lastName);
+            }
+            catch (IndexOutOfRangeException)
+            {
+                return false;
+            }
+            return true;
+        }
+        
+        // BOOK ITEM
+        public override bool AddNewBookItem(string title, string author)
+        {
+            if (dataRepository.FindBookItem(title, author) >= 0)
+                return false;
+            dataRepository.AddBookItem(title, author);
+            return true; 
+        }
+        public override bool RemoveBookItem(int bookKey)
+        {
+            try
+            {
+                dataRepository.RemoveBookItem(bookKey);
+            }
+            catch (KeyNotFoundException)
+            {
+                return false;
+            }
+            return true;
+        }
+        public override bool ChangeBookItemData(int bookKey, string title, string author)
+        { 
+            try
+            {
+                dataRepository.UpdateBookItem(bookKey, title, author);
+            }
+            catch (KeyNotFoundException)
+            {
+                return false;
+            }
+            return true;
         }
 
+        // COPIES
+        public override bool RegisterCopies(int bookKey, int quantity, double prize, string currency)
+        {
+            int i = -1;
+            try
+            {
+                i = dataRepository.FindExistedCopies(bookKey, prize, currency);
+            }
+            catch(KeyNotFoundException)
+            {
+                return false;
+            }
+            if (i >= 0)
+                dataRepository.IncrementCopyInfoStock(i, quantity);
+            else
+                dataRepository.AddCopyInfo(bookKey, quantity, prize, currency);
+            return true;
+        }
+        public override bool RetractCopies(int copiesIndex)
+        {
+            try
+            {
+                dataRepository.RemoveCopyInfo(copiesIndex);
+            }
+            catch (IndexOutOfRangeException)
+            {
+                return false;
+            }
+            return true;
+        }
+        public override bool RetractCopies(int copiesIndex, int quantity)
+        {
+            try
+            {
+                dataRepository.IncrementCopyInfoStock(copiesIndex,-quantity);
+            }
+            catch (IndexOutOfRangeException)
+            {
+                return false;
+            }
+            return true;
+        }
+        public override bool ChangeCopiesData(int copiesIndex, int bookItemKey, int stock, double prize, string currency)
+        {
+            try
+            {
+                dataRepository.UpdateCopyInfo(copiesIndex, bookItemKey, stock, prize, currency);
+            }
+            catch (IndexOutOfRangeException)
+            {
+                return false;
+            }
+            return true;
+        }
+
+        // BORROWING
         public override bool RegisterBorrowing(int readerIndex, int copyIndex)
         {
-            if (dataRepository.GetCopyInfo(copyIndex).stock == 0)
+            try
+            {
+                if (dataRepository.GetCopyInfoStock(copyIndex) == 0)
+                    return false;
+                dataRepository.AddBorrowing(readerIndex, copyIndex);
+                dataRepository.IncrementCopyInfoStock(copyIndex, -1);
+            }
+            catch (IndexOutOfRangeException)
+            {
                 return false;
-            dataRepository.AddBorrowing(dataRepository.GetReader(readerIndex), dataRepository.GetCopyInfo(copyIndex));
+            }
             return true;
         }
 
         public override bool RegisterBorrowing(int readerIndex, int copyIndex, DateTime startDate)
         {
-            if (dataRepository.GetCopyInfo(copyIndex).stock == 0)
+            try
+            {
+                if (dataRepository.GetCopyInfoStock(copyIndex) == 0)
+                    return false;
+                dataRepository.AddBorrowing(readerIndex, copyIndex,startDate);
+                dataRepository.IncrementCopyInfoStock(copyIndex, -1);
+            }
+            catch (IndexOutOfRangeException)
+            {
                 return false;
-            dataRepository.AddBorrowing(dataRepository.GetReader(readerIndex), dataRepository.GetCopyInfo(copyIndex),startDate);
+            }
             return true;
         }
 
         public override bool RegisterBorrowing(int readerIndex, int copyIndex, DateTime startDate, DateTime endDate)
         {
-            if (dataRepository.GetCopyInfo(copyIndex).stock == 0)
+            try
+            {
+                if (dataRepository.GetCopyInfoStock(copyIndex) == 0)
+                    return false;
+                dataRepository.AddBorrowing(readerIndex, copyIndex,startDate,endDate);
+                dataRepository.IncrementCopyInfoStock(copyIndex, -1);
+            }
+            catch (IndexOutOfRangeException)
+            {
                 return false;
-            dataRepository.AddBorrowing(dataRepository.GetReader(readerIndex), dataRepository.GetCopyInfo(copyIndex),startDate,endDate);
+            }
+            return true;
+        }
+        public override bool SetReturned(int borrowingIndex)
+        {
+            try
+            {
+                if (dataRepository.IsBorrowingReturned(borrowingIndex))
+                    return false;
+                dataRepository.SetBorrowingEndDate(borrowingIndex, DateTime.Now);
+                dataRepository.IncrementCopyInfoStock(
+                    dataRepository.GetCopyInfoFromBorrowing(borrowingIndex), 1);
+            }
+            catch (IndexOutOfRangeException)
+            {
+                return false;
+            }
             return true;
         }
 
-        public override void RegisterCopies(int bookIndex, int quantity, double prize, string currency)
+        public override List<string> GetInfo(string type)
         {
-            int i = dataRepository.FindExistedCopies(bookIndex, prize, currency);
-            if (i >= 0)
-            {
-                dataRepository.UpdateCopyInfoStock(dataRepository.GetCopyInfo(i), quantity);
-            }
-            else
-            {
-                dataRepository.AddCopyInfo(dataRepository.GetBookItem(bookIndex), quantity, prize, currency);
-            }
-        }
-
-        public override void RemoveBookItem(int bookKey)
-        {
-            if(dataRepository.RemoveBookItem(bookKey))
-        }
-
-        public override void RemoveReader(int readerIndex)
-        {
-            throw new NotImplementedException();
-        }
-
-        public override void RetractCopies(int copiesIndex)
-        {
-            throw new NotImplementedException();
-        }
-
-        public override void RetractCopies(int copiesIndex, int quantity)
-        {
-            throw new NotImplementedException();
+            return dataRepository.GetInfo(type);
         }
     }
 }

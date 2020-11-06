@@ -11,20 +11,45 @@ namespace TP1_app
     {
         static void Main(string[] args)
         {
-            Reader k1 = new Reader("Jan", "Kowalski", Profile.standard);
+            LibraryManager libraryManager = new LibraryManager(new DataRepository());
+            libraryManager.AddNewReader("Jacek", "Kowal", Profile.standard);
+            libraryManager.AddNewReader("Aneta", "Dzwon", Profile.young);
+            libraryManager.AddNewBookItem("Dziady", "Adam Mickiewicz");
+            libraryManager.RegisterCopies(0, 20, 10.20, "pln");
+            foreach (string info in libraryManager.GetInfo("copyInfos"))
+                Console.WriteLine(info);
+            libraryManager.RegisterCopies(0, 1, 10.99, "pln");
+            foreach (string info in libraryManager.GetInfo("copyInfos"))
+                Console.WriteLine(info);
+            libraryManager.RegisterBorrowing(0, 0);
+            libraryManager.RegisterBorrowing(1, 0);
+            foreach (string info in libraryManager.GetInfo("copyInfos"))
+                Console.WriteLine(info);
+            foreach (string info in libraryManager.GetInfo("borrowings"))
+                Console.WriteLine(info);
+            Console.ReadLine();
+            libraryManager.SetReturned(1);
+            if (libraryManager.SetReturned(1) == false)
+                Console.WriteLine("DZIALA");
+            foreach (string info in libraryManager.GetInfo("borrowings"))
+                Console.WriteLine(info);
+            foreach (string info in libraryManager.GetInfo("copyInfos"))
+                Console.WriteLine(info);
+            Console.ReadLine();
+            /* Reader k1 = new Reader("Jan", "Kowalski", Profile.standard);
             IDataRepository dataRepository = new DataRepository();
-          /*  dataRepository.AddReader(k1);
-            dataRepository.AddReader(k1);*/
+            dataRepository.AddReader(k1);
+            dataRepository.AddReader(k1);
             CopyInfo cp = new CopyInfo(new BookItem("Dziady", "Mickiewicz"),3 , 24.10f, "pln");
             CopyInfo cp2 = new CopyInfo(new BookItem("Dziady", "Mickiewicz"), 33, 24.10f, "pln");
             Console.WriteLine(cp == cp2);
-            /*     dataRepository.AddBorrowing(new Borrowing(k1, cp));*/
-            Console.WriteLine(dataRepository.GetBorrowing(0).ToString());
-            dataRepository.UpdateReader(dataRepository.GetReader(0), "Andrzej", "Nowak");
-            Console.WriteLine(dataRepository.GetBorrowing(0).ToString());
+              dataRepository.AddBorrowing(new Borrowing(k1, cp));
+            
+            dataRepository.UpdateReader(0, "Andrzej", "Nowak");
+            Console.WriteLine();
             Console.ReadLine();
 
-            /* IDiscountCounter normalReader = new DiscountCounter(0.0f);
+             IDiscountCounter normalReader = new DiscountCounter(0.0f);
              IDiscountCounter youngReader = new DiscountCounter(0.5f);
              IReader k1 = new Reader("Jan", "Kowalski", 990214291, normalReader);
              IReader ky1 = new Reader("Jasiu", "Kowalski", 040214291, youngReader);

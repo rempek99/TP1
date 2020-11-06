@@ -23,7 +23,7 @@ namespace TP1.Model
 
         override public string ToString()
         {
-            return name + " " + lastName;
+            return name + " " + lastName + " (" + profiler +")";
         }
 
         public override bool Equals(object obj)

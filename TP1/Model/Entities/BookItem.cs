@@ -24,7 +24,7 @@ namespace TP1.Model
 
         public override string ToString()
         {
-            return title + ", " + author;
+            return "\"" + title + "\"" + ", " + author;
         }
     }
 }

@@ -24,13 +24,14 @@ namespace TP1.Model
 
         override public string ToString()
         {
-            return bookItem.ToString() + "; (" + stock.ToString() + "); " + prize.ToString() + currency;
+            return bookItem.ToString() + "; (" + stock.ToString() + "); " + prize.ToString("0.00") + currency;
         }
 
         public override bool Equals(object obj)
         {
             return obj is CopyInfo info &&
                    EqualityComparer<BookItem>.Default.Equals(bookItem, info.bookItem) &&
+                   stock == info.stock &&
                    prize == info.prize &&
                    currency == info.currency;
         }

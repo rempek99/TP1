@@ -7,6 +7,7 @@ namespace TP1.Logic
     public class Profile : IProfiler
     {
         double discountValue;
+        string type;
         public static readonly Profile young = new Profile("young");
         public static readonly Profile standard = new Profile("standard");
         public double GetDiscount()
@@ -15,6 +16,7 @@ namespace TP1.Logic
         }
         protected Profile(string type)
         {
+            this.type = type;
             if (type == "young")
             {
                 discountValue = 0.5;
@@ -23,6 +25,10 @@ namespace TP1.Logic
             {
                 discountValue = 0.0;
             }
+        }
+        override public string ToString()
+        {
+            return type;
         }
     }
 }

@@ -6,28 +6,44 @@ namespace TP1.Model
 {
     public interface IDataRepository
     {
-        Reader GetReader(int i);
+        // READER
+        // Reader GetReader(int i);
         void AddReader(string name, string lastname, IProfiler profile);
-        bool RemoveReader(Reader reader);
-        bool UpdateReader(Reader reader, string name, string lastname);
+        int FindReader(string name, string lastname, IProfiler profile);
+        void RemoveReader(int readerIndex);
+        void UpdateReader(int readerIndex, string name, string lastname);
+        int GetReadersCount();
 
-        BookItem GetBookItem(int key);
+        // BOOK ITEM
+        // BookItem GetBookItem(int key);
         void AddBookItem(string title, string author);
-        bool RemoveBookItem(int key);
-        bool UpdateBookItem(int key, string title, string author);
+        int FindBookItem(string title, string author);
+        void RemoveBookItem(int key);
+        void UpdateBookItem(int key, string title, string author);
+        int GetBookItemsCount();
 
-        Borrowing GetBorrowing(int i);
-        void AddBorrowing(Reader reader, CopyInfo copyInfo, DateTime startDate, DateTime endDate);
-        void AddBorrowing(Reader reader, CopyInfo copyInfo);
-        void AddBorrowing(Reader reader, CopyInfo copyInfo, DateTime startDate);
-        bool RemoveBorrowing(Borrowing borrowing);
-        bool UpdateBorrowing(Borrowing borrowing, Reader reader, CopyInfo copyInfo, DateTime startDate, DateTime endDate);
+        // BORROWING
+        // Borrowing GetBorrowing(int i);
+        void AddBorrowing(int readerIndex, int copyInfoIndex);
+        void AddBorrowing(int readerIndex, int copyInfoIndex, DateTime startDate);
+        void AddBorrowing(int readerIndex, int copyInfoIndex, DateTime startDate, DateTime endDate);
+        // void RemoveBorrowing(int borrowingIndex); //Borrowing are saved 4ever
+        void SetBorrowingEndDate(int borrowingIndex, DateTime endDate);
+        bool IsBorrowingReturned(int borrowingIndex);
+        int FindBorrowing(int readerIndex, int copyInfoIndex, DateTime startDate);
+        int GetBorrowingsCount();
 
-        CopyInfo GetCopyInfo(int i);
-        bool AddCopyInfo(BookItem bookItem, int stock, double prize, string currency);
-        bool RemoveCopyInfo(CopyInfo copyInfo);
-        bool UpdateCopyInfo(CopyInfo copyInfo, BookItem bookItem, int stock,double prize,string currency);
-        void UpdateCopyInfoStock(CopyInfo copyInfo, int value);
-        int FindExistedCopies(int bookIndex, double prize, string currency);
+        // COPY INFO
+        // CopyInfo GetCopyInfo(int i);
+        void AddCopyInfo(int bookItemKey, int stock, double prize, string currency);
+        void RemoveCopyInfo(int copyInfoIndex);
+        void UpdateCopyInfo(int copyInfoIndex, int bookItemKey, int stock,double prize,string currency);
+        void IncrementCopyInfoStock(int copyInfoIndex, int value);
+        int FindExistedCopies(int bookItemKey, double prize, string currency);
+        int GetCopyInfosCount();
+        int GetCopyInfoStock(int copyInfoIndex);
+        int GetCopyInfoFromBorrowing(int borrowingIndex);
+
+        List<string> GetInfo(string type);
     }
 }

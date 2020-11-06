@@ -10,17 +10,35 @@ namespace TP1.Logic
     {
 
         protected IDataRepository dataRepository;
-        public abstract void AddNewReader(string name, string lastName,IProfiler profile);
-        public abstract void RemoveReader(int readerIndex);
-        public abstract void ChangeReaderData(int readerIndex, string name, string lastName);
-        public abstract void AddNewBookItem(string title, string author);
-        public abstract void RemoveBookItem(int bookIndex);
-        public abstract void ChangeBookItemData(int bookKey, string title, string author);
-        public abstract void RegisterCopies(int bookIndex, int quantity, double prize, string currency);
-        public abstract void RetractCopies(int copiesIndex);
-        public abstract void RetractCopies(int copiesIndex, int quantity);
+
+        protected DataService(IDataRepository dataRepository)
+        {
+            this.dataRepository = dataRepository;
+        }
+
+        //READER
+        public abstract bool AddNewReader(string name, string lastName,IProfiler profile);
+        public abstract bool RemoveReader(int readerIndex);
+        public abstract bool ChangeReaderData(int readerIndex, string name, string lastName);
+
+        //BOOK ITEM
+        public abstract bool AddNewBookItem(string title, string author);
+        public abstract bool RemoveBookItem(int bookIndex);
+        public abstract bool ChangeBookItemData(int bookKey, string title, string author);
+        
+        //COPIES
+        public abstract bool RegisterCopies(int bookKey, int quantity, double prize, string currency);
+        public abstract bool RetractCopies(int copiesIndex);
+        public abstract bool RetractCopies(int copiesIndex, int quantity);
+        public abstract bool ChangeCopiesData(int copiesIndex, int bookItemKey, int stock, double prize, string currency);
+        
+        //BORROWING
         public abstract bool RegisterBorrowing(int readerIndex, int copyIndex);
         public abstract bool RegisterBorrowing(int readerIndex, int copyIndex, DateTime startDate);
         public abstract bool RegisterBorrowing(int readerIndex, int copyIndex, DateTime startDate, DateTime endDate);
+        public abstract bool SetReturned(int borrowingIndex);
+
+
+        public abstract List<string> GetInfo(string type);
     }
 }

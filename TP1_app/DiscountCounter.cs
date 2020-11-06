@@ -1,11 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
+using TP1;
 using TP1.Model;
 
 namespace TP1_app
 {
-    public class DiscountCounter : IDiscountCounter
+    public class DiscountCounter : IProfiler
     {
         private float discountValue;
 
@@ -13,9 +14,9 @@ namespace TP1_app
         {
             this.discountValue = discountValue;
         }
-        public float getDiscount()
+        public double GetDiscount()
         {
-            return discountValue;
+            throw new NotImplementedException();
         }
     }
 }

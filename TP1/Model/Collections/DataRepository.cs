@@ -16,162 +16,284 @@ namespace TP1.Model
             this.dataContext = new DataContext();
             this.key = 0;
         }
+        // READER
+        public void AddReader(string name, string lastname, IProfiler profile)
+        {
+            dataContext.readers.Add(new Reader(name,lastname,profile));
+        }
+        public int FindReader(string name, string lastname, IProfiler profile)
+        {
+            int i = 0;
+            Reader pattern = new Reader(name, lastname, profile);
+            foreach(Reader reader in dataContext.readers)
+            {
+                if (reader == pattern)
+                    return i;
+                i++;
+            }
+            return -1;
+        }
+        public void RemoveReader(int readerIndex)
+        {
+           /* if (dataContext.readers.Contains(reader))
+            {*/
+                dataContext.readers.Remove(dataContext.readers[readerIndex]);
+               /* return true;
+            }
+            return false;*/
+        }
+        public void UpdateReader(int readerIndex, string name, string lastname)
+        {
+            /*if (!dataContext.readers.Contains(reader))
+                return false;*/
+            dataContext.readers[readerIndex].name = name;
+            dataContext.readers[readerIndex].lastName = lastname;
+           /* return true;*/
+        }
+        public int GetReadersCount()
+        {
+            return dataContext.readers.Count();
+        }
 
+        // BOOK ITEM
         public void AddBookItem(string title, string author)
         {
             dataContext.books.Add(key, new BookItem(title,author));
             key++;
         }
-
-        public void AddReader(string name, string lastname, IProfiler profile)
+        public int FindBookItem(string title, string author)// SPRAWDZIC
         {
-            dataContext.readers.Add(new Reader(name,lastname,profile));
-        }
-
-        public bool AddCopyInfo(BookItem bookItem, int stock, double prize, string currency)
-        {
-            CopyInfo newCopyInfo = new CopyInfo(bookItem, stock, prize, currency);
-            if(dataContext.copyInfos.Contains(newCopyInfo))
+            BookItem pattern = new BookItem(title, author);
+            int key = -1;
+            foreach(BookItem element in dataContext.books.Values)
             {
-                return false;
+                if (element == pattern)
+                {
+                    key = dataContext.books.FirstOrDefault(x => x.Value == pattern).Key;
+                    return key;
+                }
             }
-            dataContext.copyInfos.Add(newCopyInfo);
-            return true;
+            return key;
         }
-        public void AddBorrowing(Reader reader, CopyInfo copyInfo)
+        public void RemoveBookItem(int key)
         {
-            dataContext.borrowings.Add(new Borrowing(reader, copyInfo));
-        }
-        public void AddBorrowing(Reader reader, CopyInfo copyInfo, DateTime startDate)
-        {
-            dataContext.borrowings.Add(new Borrowing(reader, copyInfo, startDate));
-        }
-        public void AddBorrowing(Reader reader, CopyInfo copyInfo, DateTime startDate, DateTime endDate)
-        {
-            dataContext.borrowings.Add(new Borrowing(reader,copyInfo,startDate,endDate));
-        }
-
-        public bool RemoveBookItem(int key)
-        {
-            if(dataContext.books.ContainsKey(key))
-            {
+            /*if(dataContext.books.ContainsKey(key))
+            {*/
                 dataContext.books.Remove(key);
-                return true;
-            }
-            return false;            
+            /*return true;
         }
-
-        public bool RemoveReader(Reader reader)
-        {
-            if (dataContext.readers.Contains(reader))
-            {
-                dataContext.readers.Remove(reader);
-                return true;
-            }
-            return false;
+            return false;   */         
         }
-
-        public bool RemoveBorrowing(Borrowing borrowing)
+        public void UpdateBookItem(int key, string title, string author)
         {
-            if (dataContext.borrowings.Contains(borrowing))
-            {
-                dataContext.borrowings.Remove(borrowing);
-                return true;
-            }
-            return false;
-        }
-
-        public bool RemoveCopyInfo(CopyInfo copyInfo)
-        {
-            if (dataContext.copyInfos.Contains(copyInfo))
-            {
-                dataContext.copyInfos.Remove(copyInfo);
-                return true;
-            }
-            return false;
-        }
-
-        public bool UpdateReader(Reader reader, string name, string lastname)
-        {
-            if (!dataContext.readers.Contains(reader))
-                return false;
-            reader.name = name;
-            reader.lastName = lastname;
-            return true;
-        }
-
-        public bool UpdateBookItem(int key, string title, string author)
-        {
-            if (!dataContext.books.ContainsKey(key))
-                return false;
+       /*     if (!dataContext.books.ContainsKey(key))
+                return false;*/
             dataContext.books[key].author = author;
             dataContext.books[key].title = title;
-            return true;
+           /* return true;*/
+        }
+        public int GetBookItemsCount()
+        {
+            return dataContext.books.Count();
         }
 
-        public bool UpdateBorrowing(Borrowing borrowing, Reader reader, CopyInfo copyInfo, DateTime startDate, DateTime endDate)
+        // BORROWING
+        public void AddBorrowing(int readerIndex, int copyInfoIndex)
         {
-            if (!dataContext.borrowings.Contains(borrowing))
+            dataContext.borrowings.Add(new Borrowing(dataContext.readers[readerIndex], dataContext.copyInfos[copyInfoIndex]));
+        }
+        public void AddBorrowing(int readerIndex, int copyInfoIndex, DateTime startDate)
+        {
+            dataContext.borrowings.Add(new Borrowing(dataContext.readers[readerIndex], dataContext.copyInfos[copyInfoIndex], startDate));
+        }
+        public void AddBorrowing(int readerIndex, int copyInfoIndex, DateTime startDate, DateTime endDate)
+        {
+            dataContext.borrowings.Add(new Borrowing(dataContext.readers[readerIndex], dataContext.copyInfos[copyInfoIndex], startDate,endDate));
+        }
+        public void SetBorrowingEndDate(int borrowingIndex, DateTime endDate)
+        {
+           /* if (!dataContext.borrowings.Contains(borrowing))
+                return false;*/
+            dataContext.borrowings[borrowingIndex].endDate = endDate;
+           /* return true;*/
+        }
+        public bool IsBorrowingReturned(int borrowingIndex)
+        {
+            if (dataContext.borrowings[borrowingIndex].endDate == new DateTime(0))
                 return false;
-            borrowing.copyInfo = copyInfo;
-            borrowing.reader = reader;
-            borrowing.startDate = startDate;
-            borrowing.endDate = endDate;
             return true;
         }
-
-        public bool UpdateCopyInfo(CopyInfo copyInfo, BookItem bookItem, int stock, double prize, string currency)
+        public int FindBorrowing(int readerIndex, int copyInfoIndex, DateTime startDate)
         {
+            int i = 0;
+            Borrowing pattern = new Borrowing(dataContext.readers[readerIndex], dataContext.copyInfos[copyInfoIndex], startDate);
+            foreach (Borrowing borrowing in dataContext.borrowings)
+            {
+                if (borrowing == pattern)
+                    return i;
+                i++;
+            }
+            return -1;
+        }
+        public int GetBorrowingsCount()
+        {
+            return dataContext.borrowings.Count();
+        }
 
+        // COPY INFO
+        public void AddCopyInfo(int bookItemKey, int stock, double prize, string currency)
+        {
+          /*  CopyInfo newCopyInfo = new CopyInfo(bookItem, stock, prize, currency);
+            if (dataContext.copyInfos.Contains(newCopyInfo))
+            {
+                return false;
+            }*/
+            dataContext.copyInfos.Add(new CopyInfo(dataContext.books[bookItemKey], stock, prize, currency));
+          //  return true;
+        }
+        public void RemoveCopyInfo(int copyInfoIndex)
+        {
+            /*if (dataContext.copyInfos.Contains(copyInfo))
+            {*/
+                dataContext.copyInfos.Remove(dataContext.copyInfos[copyInfoIndex]);
+           /*     return true;
+            }
+            return false;*/
+        }
+        public void UpdateCopyInfo(int copyInfoIndex, int bookItemKey, int stock, double prize, string currency)
+        {
+/*
             if (!dataContext.copyInfos.Contains(copyInfo))
-                return false;
-            copyInfo.bookItem = bookItem;
-            copyInfo.stock = stock;
-            copyInfo.prize = prize;
-            copyInfo.currency = currency;
-            return true;
+                return false;*/
+            dataContext.copyInfos[copyInfoIndex].bookItem = dataContext.books[bookItemKey];
+            dataContext.copyInfos[copyInfoIndex].stock = stock;
+            dataContext.copyInfos[copyInfoIndex].prize = prize;
+            dataContext.copyInfos[copyInfoIndex].currency = currency;
+        /*    return true;*/
         }
-
-        public Reader GetReader(int i)
+        public void IncrementCopyInfoStock(int copyInfoIndex, int value)
         {
-            if (dataContext.readers.Count() < i + 1)
-                return null;
-            return dataContext.readers[i];
+            dataContext.copyInfos[copyInfoIndex].stock += value;
         }
-
-        public BookItem GetBookItem(int key)
+        public int FindExistedCopies(int bookItemKey, double prize, string currency)
         {
-            return dataContext.books[key];
-        }
-
-        public Borrowing GetBorrowing(int i)
-        {
-            if (dataContext.borrowings.Count() < i + 1)
-                return null;
-            return dataContext.borrowings[i];
-        }
-
-        public CopyInfo GetCopyInfo(int i)
-        {
-            if (dataContext.copyInfos.Count() < i + 1)
-                return null;
-            return dataContext.copyInfos[i];
-        }
-
-        public int FindExistedCopies(int bookIndex, double prize, string currency)
-        {
-            CopyInfo newCopyInfo = new CopyInfo(dataContext.books[bookIndex], 0, prize, currency);
+            CopyInfo newCopyInfo = new CopyInfo(dataContext.books[bookItemKey], 0, prize, currency);
             for(int i =0; i < dataContext.copyInfos.Count();i++)
             {
-                if (dataContext.copyInfos[i] == newCopyInfo)
+                if (dataContext.copyInfos[i].bookItem == newCopyInfo.bookItem
+                    && dataContext.copyInfos[i].prize == newCopyInfo.prize
+                    && dataContext.copyInfos[i].currency == newCopyInfo.currency
+                    )
                     return i;
             }
             return -1;
         }
-
-        public void UpdateCopyInfoStock(CopyInfo copyInfo, int value)
+        public int GetCopyInfosCount()
         {
-            copyInfo.stock += value;
+            return dataContext.copyInfos.Count();
         }
+        public int GetCopyInfoStock(int copyInfoIndex)
+        {
+            return dataContext.copyInfos[copyInfoIndex].stock;
+        }
+        public int GetCopyInfoFromBorrowing(int borrowingIndex)
+        {
+            CopyInfo pattern = dataContext.borrowings[borrowingIndex].copyInfo;
+            int i = 0;
+            foreach(CopyInfo element in dataContext.copyInfos)
+            {
+                if (element == pattern)
+                    break;
+                i++;
+            }
+            return i;
+        }
+
+        public List<string> GetInfo(string type)
+        {
+            List<string> output = new List<string>();
+            int i = 0;
+            switch (type)
+            { 
+                case "readers":
+                    {
+                        foreach (object element in dataContext.readers)
+                        {
+                            output.Add(i +") " + element.ToString());
+                            i++;
+                        }
+                        break;
+                    }
+                case "bookItems":
+                    {
+                        foreach (object element in dataContext.books)
+                        {
+                            output.Add(i + ") " + element.ToString());
+                            i++;
+                        }
+                        break;
+                    }
+                case "copyInfos":
+                    {
+                        foreach (object element in dataContext.copyInfos)
+                        {
+                            output.Add(i + ") " + element.ToString());
+                            i++;
+                        }
+                        break;
+                    }
+                case "borrowings":
+                    {
+                        foreach (object element in dataContext.borrowings)
+                        {
+                            output.Add(i + ") " + element.ToString());
+                            i++;
+                        }
+                        break;
+                    }
+                default:
+                    {
+                        output.Add("! Unrecognized type !");
+                        break;
+                    }
+            }
+            return output;
+        }
+        /* public Reader GetReader(int i)
+         {
+             if (dataContext.readers.Count() < i + 1)
+                 return null;
+             return dataContext.readers[i];
+         }*/
+
+        /* public BookItem GetBookItem(int key)
+         {
+             return dataContext.books[key];
+         }*/
+
+        /*  public Borrowing GetBorrowing(int i)
+          {
+              if (dataContext.borrowings.Count() < i + 1)
+                  return null;
+              return dataContext.borrowings[i];
+          }*/
+
+        /* public CopyInfo GetCopyInfo(int i)
+         {
+             if (dataContext.copyInfos.Count() < i + 1)
+                 return null;
+             return dataContext.copyInfos[i];
+         }*/
+
+        /*  public void RemoveBorrowing(int borrowingIndex)
+          {
+              if (dataContext.borrowings.Contains(borrowing))
+              {
+                  dataContext.borrowings.Remove(dataContext.borrowings[borrowingIndex]);
+              return true;
+          }
+              return false;
+          }*/
+
     }
 }

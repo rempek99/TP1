@@ -40,7 +40,18 @@ namespace TP1.Model
 
         public override string ToString()
         {
-            return reader.ToString() + "; " + copyInfo.ToString() + "; " + startDate;   
+            string output = reader.ToString() + "; " + copyInfo.bookItem + "; " + (copyInfo.prize-copyInfo.prize*reader.GetDiscount()).ToString("0.00") + copyInfo.currency + "; " + startDate;
+            if (endDate != new DateTime(0))
+                output += "; " + endDate;
+            return output;
+        }
+
+        public override bool Equals(object obj)
+        {
+            return obj is Borrowing borrowing &&
+                   EqualityComparer<Reader>.Default.Equals(reader, borrowing.reader) &&
+                   EqualityComparer<CopyInfo>.Default.Equals(copyInfo, borrowing.copyInfo) &&
+                   startDate == borrowing.startDate;
         }
     }
 }

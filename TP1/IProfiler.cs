@@ -7,5 +7,6 @@ namespace TP1
     public interface IProfiler
     {
         double GetDiscount();
+        string ToString();
     }
 }
