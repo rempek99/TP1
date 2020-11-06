@@ -11,9 +11,26 @@ namespace TP1_app
     {
         static void Main(string[] args)
         {
-            LibraryManager libraryManager = new LibraryManager(new DataRepository());
-            libraryManager.AddNewReader("Jacek", "Kowal", Profile.standard);
-            libraryManager.AddNewReader("Aneta", "Dzwon", Profile.young);
+            
+            XmlReader x = new XmlReader("D:\\Studia\\5_SEMESTR\\TP\\TP1\\TP1\\Resources\\data.xml");
+            List<string> tmp = x.readData("reader","name");
+            Console.WriteLine(new DateTime(0));
+            foreach (string info in tmp)
+                Console.WriteLine(info);
+
+            LibraryManager libraryManager = new LibraryManager(new DataRepository(x));
+            libraryManager.LoadFileData();
+            foreach (string info in libraryManager.GetInfo("readers"))
+                Console.WriteLine(info);
+            foreach (string info in libraryManager.GetInfo("bookItems"))
+                Console.WriteLine(info);
+            foreach (string info in libraryManager.GetInfo("copyInfos"))
+                Console.WriteLine(info);
+            foreach (string info in libraryManager.GetInfo("borrowings"))
+                Console.WriteLine(info);
+            Console.ReadLine();
+            libraryManager.AddNewReader("Jacek", "Kowal");
+            libraryManager.AddNewReader("Aneta", "Dzwon");
             libraryManager.AddNewBookItem("Dziady", "Adam Mickiewicz");
             libraryManager.RegisterCopies(0, 20, 10.20, "pln");
             foreach (string info in libraryManager.GetInfo("copyInfos"))

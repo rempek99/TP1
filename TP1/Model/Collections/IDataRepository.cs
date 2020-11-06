@@ -6,10 +6,11 @@ namespace TP1.Model
 {
     public interface IDataRepository
     {
+
         // READER
         // Reader GetReader(int i);
-        void AddReader(string name, string lastname, IProfiler profile);
-        int FindReader(string name, string lastname, IProfiler profile);
+        void AddReader(string name, string lastname);
+        int FindReader(string name, string lastname);
         void RemoveReader(int readerIndex);
         void UpdateReader(int readerIndex, string name, string lastname);
         int GetReadersCount();
@@ -45,5 +46,6 @@ namespace TP1.Model
         int GetCopyInfoFromBorrowing(int borrowingIndex);
 
         List<string> GetInfo(string type);
+        void LoadDataFromFile();
     }
 }

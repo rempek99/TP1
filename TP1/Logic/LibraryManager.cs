@@ -12,12 +12,12 @@ namespace TP1.Logic
         }
 
         // READER
-        public override bool AddNewReader(string name, string lastName, IProfiler profile)
+        public override bool AddNewReader(string name, string lastName)
         {
-            if (dataRepository.FindReader(name, lastName, profile) >= 0)
+            if (dataRepository.FindReader(name, lastName) >= 0)
                 return false;
 
-            dataRepository.AddReader(name, lastName, profile);
+            dataRepository.AddReader(name, lastName);
             return true;
         }
         public override bool RemoveReader(int readerIndex)
@@ -201,6 +201,11 @@ namespace TP1.Logic
         public override List<string> GetInfo(string type)
         {
             return dataRepository.GetInfo(type);
+        }
+
+        public override void LoadFileData()
+        {
+            dataRepository.LoadDataFromFile();
         }
     }
 }

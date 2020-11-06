@@ -17,7 +17,7 @@ namespace TP1.Logic
         }
 
         //READER
-        public abstract bool AddNewReader(string name, string lastName,IProfiler profile);
+        public abstract bool AddNewReader(string name, string lastName);
         public abstract bool RemoveReader(int readerIndex);
         public abstract bool ChangeReaderData(int readerIndex, string name, string lastName);
 
@@ -40,5 +40,6 @@ namespace TP1.Logic
 
 
         public abstract List<string> GetInfo(string type);
+        public abstract void LoadFileData();
     }
 }

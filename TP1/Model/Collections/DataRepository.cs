@@ -10,21 +10,24 @@ namespace TP1.Model
     {
         private DataContext dataContext;
         private int key;
+        private IDataReaderFromFile dataReader { get;  set; }
 
-        public DataRepository()
+        public DataRepository(IDataReaderFromFile dataReader)
         {
+            this.dataReader = dataReader;
             this.dataContext = new DataContext();
             this.key = 0;
         }
+
         // READER
-        public void AddReader(string name, string lastname, IProfiler profile)
+        public void AddReader(string name, string lastname)
         {
-            dataContext.readers.Add(new Reader(name,lastname,profile));
+            dataContext.readers.Add(new Reader(name,lastname));
         }
-        public int FindReader(string name, string lastname, IProfiler profile)
+        public int FindReader(string name, string lastname)
         {
             int i = 0;
-            Reader pattern = new Reader(name, lastname, profile);
+            Reader pattern = new Reader(name, lastname);
             foreach(Reader reader in dataContext.readers)
             {
                 if (reader == pattern)
@@ -228,7 +231,7 @@ namespace TP1.Model
                     {
                         foreach (object element in dataContext.books)
                         {
-                            output.Add(i + ") " + element.ToString());
+                            output.Add(element.ToString());
                             i++;
                         }
                         break;
@@ -258,6 +261,35 @@ namespace TP1.Model
                     }
             }
             return output;
+        }
+        public void LoadDataFromFile()
+        {
+            List<string> a = dataReader.readData("reader", "name");
+            List<string> b = dataReader.readData("reader", "lastName");
+            for(int i = 0; i < a.Count();i++)
+                AddReader(a[i],b[i]);
+            a = dataReader.readData("book", "title");
+            b = dataReader.readData("book", "author");
+            for (int i = 0; i < a.Count(); i++)
+                AddBookItem(a[i], b[i]);
+            a = dataReader.readData("copyInfo", "bookItemKey");
+            b = dataReader.readData("copyInfo", "stock");
+            List<string> c = dataReader.readData("copyInfo", "prize");
+            List<string> d = dataReader.readData("copyInfo", "currency");
+            for (int i = 0; i < a.Count(); i++)
+                AddCopyInfo(Convert.ToInt32(a[i]), Convert.ToInt32(b[i]), Convert.ToDouble(c[i]),d[i]);
+            a = dataReader.readData("borrowing", "readerIndex");
+            b = dataReader.readData("borrowing", "copyInfoIndex");
+            c = dataReader.readData("borrowing", "startDate");
+            d = dataReader.readData("borrowing", "endDate");
+            for (int i = 0; i < a.Count(); i++)
+            {
+                if (d[i].Length == 0)
+                {
+                    d[i] = new DateTime(0).ToString();
+                }
+                AddBorrowing(Convert.ToInt32(a[i]), Convert.ToInt32(b[i]), Convert.ToDateTime(c[i]), Convert.ToDateTime(d[i]));
+            }  
         }
         /* public Reader GetReader(int i)
          {

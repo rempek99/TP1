@@ -4,7 +4,7 @@ using System.Text;
 
 namespace TP1.Logic
 {
-    public class Profile : IProfiler
+    public class Profile 
     {
         double discountValue;
         string type;

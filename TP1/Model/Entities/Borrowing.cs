@@ -40,7 +40,7 @@ namespace TP1.Model
 
         public override string ToString()
         {
-            string output = reader.ToString() + "; " + copyInfo.bookItem + "; " + (copyInfo.prize-copyInfo.prize*reader.GetDiscount()).ToString("0.00") + copyInfo.currency + "; " + startDate;
+            string output = reader.ToString() + "; " + copyInfo+ "; " + startDate;
             if (endDate != new DateTime(0))
                 output += "; " + endDate;
             return output;

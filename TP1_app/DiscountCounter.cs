@@ -6,7 +6,7 @@ using TP1.Model;
 
 namespace TP1_app
 {
-    public class DiscountCounter : IProfiler
+    public class DiscountCounter
     {
         private float discountValue;
 
