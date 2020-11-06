@@ -4,8 +4,8 @@ using System.Text;
 
 namespace TP1
 {
-    public interface IClient
-    { 
-        float GetDiscount();
+    public interface IProfiler
+    {
+        double GetDiscount();
     }
 }
