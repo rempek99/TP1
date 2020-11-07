@@ -47,5 +47,6 @@ namespace TP1.Model
 
         List<string> GetInfo(string type);
         void LoadDataFromFile();
+        int GetKey();
     }
 }

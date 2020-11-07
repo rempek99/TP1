@@ -30,7 +30,7 @@ namespace TP1.Model
             Reader pattern = new Reader(name, lastname);
             foreach(Reader reader in dataContext.readers)
             {
-                if (reader == pattern)
+                if (reader.Equals(pattern))
                     return i;
                 i++;
             }
@@ -70,9 +70,9 @@ namespace TP1.Model
             int key = -1;
             foreach(BookItem element in dataContext.books.Values)
             {
-                if (element == pattern)
+                if (element.Equals(pattern))
                 {
-                    key = dataContext.books.FirstOrDefault(x => x.Value == pattern).Key;
+                    key = dataContext.books.FirstOrDefault(x => x.Value.Equals(pattern)).Key;
                     return key;
                 }
             }
@@ -132,7 +132,7 @@ namespace TP1.Model
             Borrowing pattern = new Borrowing(dataContext.readers[readerIndex], dataContext.copyInfos[copyInfoIndex], startDate);
             foreach (Borrowing borrowing in dataContext.borrowings)
             {
-                if (borrowing == pattern)
+                if (borrowing.Equals(pattern))
                     return i;
                 i++;
             }
@@ -291,12 +291,17 @@ namespace TP1.Model
                 AddBorrowing(Convert.ToInt32(a[i]), Convert.ToInt32(b[i]), Convert.ToDateTime(c[i]), Convert.ToDateTime(d[i]));
             }  
         }
+
+        public int GetKey()
+        {
+            return key;
+        }
         /* public Reader GetReader(int i)
-         {
-             if (dataContext.readers.Count() < i + 1)
-                 return null;
-             return dataContext.readers[i];
-         }*/
+{
+    if (dataContext.readers.Count() < i + 1)
+        return null;
+    return dataContext.readers[i];
+}*/
 
         /* public BookItem GetBookItem(int key)
          {

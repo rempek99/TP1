@@ -33,10 +33,10 @@ namespace TP1.Model
             this.startDate = DateTime.Now;
         }
 
-        public void setReturned()
+       /* public void setReturned()
         {
             this.endDate = DateTime.Now;
-        }
+        }*/
 
         public override string ToString()
         {
@@ -51,7 +51,8 @@ namespace TP1.Model
             return obj is Borrowing borrowing &&
                    EqualityComparer<Reader>.Default.Equals(reader, borrowing.reader) &&
                    EqualityComparer<CopyInfo>.Default.Equals(copyInfo, borrowing.copyInfo) &&
-                   startDate == borrowing.startDate;
+                   startDate == borrowing.startDate &&
+                   endDate == borrowing.endDate;
         }
     }
 }
