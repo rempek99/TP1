@@ -95,7 +95,9 @@ namespace TP1_test
             Assert.Equal(repo.GetKey() - 1, repo.FindBookItem(title1, author1));
             repo.UpdateBookItem(repo.GetKey() - 1, title2, author2);
             Assert.Equal(repo.GetKey() - 1, repo.FindBookItem(title2, author2));
+            Assert.True(repo.BookExist(repo.GetKey() - 1));
             repo.RemoveBookItem(repo.GetKey() - 1);
+            Assert.False(repo.BookExist(repo.GetKey() - 1));
             Assert.Equal(0, repo.GetBookItemsCount());
             Random rnd = new Random();
             int tmp = rnd.Next(2, 256);

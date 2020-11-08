@@ -21,6 +21,7 @@ namespace TP1.Model
         int FindBookItem(string title, string author);
         void RemoveBookItem(int key);
         void UpdateBookItem(int key, string title, string author);
+        bool BookExist(int bookItemKey);
         int GetBookItemsCount();
 
         // BORROWING

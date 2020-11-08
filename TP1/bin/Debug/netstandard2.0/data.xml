@@ -1,5 +1,10 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <data>
+	<borrowing>
+		<readerIndex>2</readerIndex>
+		<copyInfoIndex>1</copyInfoIndex>
+		<startDate>16.10.2020 12:47:10</startDate>
+	</borrowing>
 	<reader>
 		<name>Janusz</name>
 		<lastName>Walczuk</lastName>
@@ -38,9 +43,5 @@
 		<startDate>03.11.2020 23:37:50</startDate>
 		<endDate>06.11.2020 23:37:50</endDate>
 	</borrowing>
-	<borrowing>
-		<readerIndex>2</readerIndex>
-		<copyInfoIndex>1</copyInfoIndex>
-		<startDate>16.10.2020 12:47:10</startDate>
-	</borrowing>
+	
 </data>

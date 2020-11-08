@@ -30,7 +30,8 @@ namespace TP1.Logic
         public abstract bool RegisterCopies(int bookKey, int quantity, double prize, string currency);
         public abstract bool RetractCopies(int copiesIndex);
         public abstract bool RetractCopies(int copiesIndex, int quantity);
-        public abstract bool ChangeCopiesData(int copiesIndex, int bookItemKey, int stock, double prize, string currency);
+        public abstract bool ChangeCopiesData(int copiesIndex, int bookItemKey, int quantity, double prize, string currency);
+        public abstract int GetQuantity(int copiesIndex);
         
         //BORROWING
         public abstract bool RegisterBorrowing(int readerIndex, int copyIndex);

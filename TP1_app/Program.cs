@@ -12,7 +12,7 @@ namespace TP1_app
         static void Main(string[] args)
         {
             
-            XmlReader x = new XmlReader("D:\\Studia\\5_SEMESTR\\TP\\TP1\\TP1\\Resources\\data.xml");
+            XmlReader x = new XmlReader("data.xml");
             List<string> tmp = x.readData("reader","name");
             Console.WriteLine(new DateTime(0));
             foreach (string info in tmp)
@@ -51,6 +51,32 @@ namespace TP1_app
             foreach (string info in libraryManager.GetInfo("borrowings"))
                 Console.WriteLine(info);
             foreach (string info in libraryManager.GetInfo("copyInfos"))
+                Console.WriteLine(info);
+            Console.ReadLine();
+            Console.WriteLine("PRZED USUNIECIEM");
+            foreach (string info in libraryManager.GetInfo("readers"))
+                Console.WriteLine(info);
+            foreach (string info in libraryManager.GetInfo("bookItems"))
+                Console.WriteLine(info);
+            foreach (string info in libraryManager.GetInfo("copyInfos"))
+                Console.WriteLine(info);
+            foreach (string info in libraryManager.GetInfo("borrowings"))
+                Console.WriteLine(info);
+            libraryManager.RemoveReader(2);
+            libraryManager.RemoveBookItem(0);
+            libraryManager.RetractCopies(1);
+            Console.WriteLine("USUNIETO KAROLINE i DZIADY");
+            foreach (string info in libraryManager.GetInfo("readers"))
+                Console.WriteLine(info);
+            foreach (string info in libraryManager.GetInfo("bookItems"))
+                Console.WriteLine(info);
+            foreach (string info in libraryManager.GetInfo("copyInfos"))
+                Console.WriteLine(info);
+            foreach (string info in libraryManager.GetInfo("borrowings"))
+                Console.WriteLine(info);
+            libraryManager.SetReturned(0);
+            Console.WriteLine("ZWROT KSIAZKI KAROLINY");
+            foreach (string info in libraryManager.GetInfo("borrowings"))
                 Console.WriteLine(info);
             Console.ReadLine();
             /* Reader k1 = new Reader("Jan", "Kowalski", Profile.standard);

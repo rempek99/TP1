@@ -8,3 +8,4 @@ D:\Studia\5_SEMESTR\TP\TP1\TP1_app\obj\Debug\TP1_app.csproj.CoreCompileInputs.ca
 D:\Studia\5_SEMESTR\TP\TP1\TP1_app\obj\Debug\TP1_app.csproj.CopyComplete
 D:\Studia\5_SEMESTR\TP\TP1\TP1_app\obj\Debug\TP1_app.exe
 D:\Studia\5_SEMESTR\TP\TP1\TP1_app\obj\Debug\TP1_app.pdb
+D:\Studia\5_SEMESTR\TP\TP1\TP1_app\bin\Debug\data.xml

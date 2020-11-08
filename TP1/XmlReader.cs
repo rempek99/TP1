@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using System.Text;
 using TP1.Model;
 
-namespace TP1.Logic
+namespace TP1
 {
     public class XmlReader : IDataReaderFromFile
     {

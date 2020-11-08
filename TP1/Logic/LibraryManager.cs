@@ -26,9 +26,10 @@ namespace TP1.Logic
             {
                 dataRepository.RemoveReader(readerIndex);
             }
-            catch(IndexOutOfRangeException)
+            catch (Exception ex)
             {
-                return false;
+                if (ex is IndexOutOfRangeException || ex is ArgumentOutOfRangeException)
+                    return false;
             }
             return true;
         }
@@ -38,8 +39,9 @@ namespace TP1.Logic
             {
                 dataRepository.UpdateReader(readerIndex, name, lastName);
             }
-            catch (IndexOutOfRangeException)
+            catch (Exception ex)
             {
+                if(ex is IndexOutOfRangeException || ex is ArgumentOutOfRangeException)
                 return false;
             }
             return true;
@@ -57,6 +59,8 @@ namespace TP1.Logic
         {
             try
             {
+                if (!dataRepository.BookExist(bookKey))
+                    return false;
                 dataRepository.RemoveBookItem(bookKey);
             }
             catch (KeyNotFoundException)
@@ -102,9 +106,10 @@ namespace TP1.Logic
             {
                 dataRepository.RemoveCopyInfo(copiesIndex);
             }
-            catch (IndexOutOfRangeException)
+            catch (Exception ex)
             {
-                return false;
+                if (ex is IndexOutOfRangeException || ex is ArgumentOutOfRangeException)
+                    return false;
             }
             return true;
         }
@@ -114,23 +119,29 @@ namespace TP1.Logic
             {
                 dataRepository.IncrementCopyInfoStock(copiesIndex,-quantity);
             }
-            catch (IndexOutOfRangeException)
+            catch (Exception ex)
             {
-                return false;
+                if (ex is IndexOutOfRangeException || ex is ArgumentOutOfRangeException)
+                    return false;
             }
             return true;
         }
-        public override bool ChangeCopiesData(int copiesIndex, int bookItemKey, int stock, double prize, string currency)
+        public override bool ChangeCopiesData(int copiesIndex, int bookItemKey, int quantity, double prize, string currency)
         {
             try
             {
-                dataRepository.UpdateCopyInfo(copiesIndex, bookItemKey, stock, prize, currency);
+                dataRepository.UpdateCopyInfo(copiesIndex, bookItemKey, quantity, prize, currency);
             }
-            catch (IndexOutOfRangeException)
+            catch (Exception ex)
             {
-                return false;
+                if (ex is IndexOutOfRangeException || ex is ArgumentOutOfRangeException)
+                    return false;
             }
             return true;
+        }
+        public override int GetQuantity(int copiesIndex)
+        {
+            return dataRepository.GetCopyInfoStock(copiesIndex);
         }
 
         // BORROWING
@@ -143,9 +154,10 @@ namespace TP1.Logic
                 dataRepository.AddBorrowing(readerIndex, copyIndex);
                 dataRepository.IncrementCopyInfoStock(copyIndex, -1);
             }
-            catch (IndexOutOfRangeException)
+            catch (Exception ex)
             {
-                return false;
+                if (ex is IndexOutOfRangeException || ex is ArgumentOutOfRangeException)
+                    return false;
             }
             return true;
         }
@@ -159,9 +171,10 @@ namespace TP1.Logic
                 dataRepository.AddBorrowing(readerIndex, copyIndex,startDate);
                 dataRepository.IncrementCopyInfoStock(copyIndex, -1);
             }
-            catch (IndexOutOfRangeException)
+            catch (Exception ex)
             {
-                return false;
+                if (ex is IndexOutOfRangeException || ex is ArgumentOutOfRangeException)
+                    return false;
             }
             return true;
         }
@@ -172,12 +185,15 @@ namespace TP1.Logic
             {
                 if (dataRepository.GetCopyInfoStock(copyIndex) == 0)
                     return false;
+                if (startDate > endDate)
+                    return false;
                 dataRepository.AddBorrowing(readerIndex, copyIndex,startDate,endDate);
                 dataRepository.IncrementCopyInfoStock(copyIndex, -1);
             }
-            catch (IndexOutOfRangeException)
+            catch (Exception ex)
             {
-                return false;
+                if (ex is IndexOutOfRangeException || ex is ArgumentOutOfRangeException)
+                    return false;
             }
             return true;
         }
@@ -191,9 +207,10 @@ namespace TP1.Logic
                 dataRepository.IncrementCopyInfoStock(
                     dataRepository.GetCopyInfoFromBorrowing(borrowingIndex), 1);
             }
-            catch (IndexOutOfRangeException)
+            catch (Exception ex)
             {
-                return false;
+                if (ex is IndexOutOfRangeException || ex is ArgumentOutOfRangeException)
+                    return false;
             }
             return true;
         }
@@ -207,5 +224,6 @@ namespace TP1.Logic
         {
             dataRepository.LoadDataFromFile();
         }
+
     }
 }

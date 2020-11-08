@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Linq;
 using System.Text;
 using TP1.Model;
@@ -98,6 +99,12 @@ namespace TP1.Model
         public int GetBookItemsCount()
         {
             return dataContext.books.Count();
+        }
+        public bool BookExist(int bookItemKey)
+        {
+            if (dataContext.books.ContainsKey(bookItemKey))
+                return true;
+            return false;
         }
 
         // BORROWING
@@ -296,11 +303,12 @@ namespace TP1.Model
         {
             return key;
         }
+
         /* public Reader GetReader(int i)
 {
-    if (dataContext.readers.Count() < i + 1)
-        return null;
-    return dataContext.readers[i];
+if (dataContext.readers.Count() < i + 1)
+return null;
+return dataContext.readers[i];
 }*/
 
         /* public BookItem GetBookItem(int key)

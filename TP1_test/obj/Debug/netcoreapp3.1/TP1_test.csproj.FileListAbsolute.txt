@@ -96,3 +96,4 @@ D:\Studia\5_SEMESTR\TP\TP1\TP1_test\obj\Debug\netcoreapp3.1\TP1_test.csproj.Copy
 D:\Studia\5_SEMESTR\TP\TP1\TP1_test\obj\Debug\netcoreapp3.1\TP1_test.dll
 D:\Studia\5_SEMESTR\TP\TP1\TP1_test\obj\Debug\netcoreapp3.1\TP1_test.pdb
 D:\Studia\5_SEMESTR\TP\TP1\TP1_test\obj\Debug\netcoreapp3.1\TP1_test.genruntimeconfig.cache
+D:\Studia\5_SEMESTR\TP\TP1\TP1_test\bin\Debug\netcoreapp3.1\data.xml
