@@ -26,5 +26,12 @@ namespace TP1.Model
                    name == reader.name &&
                    lastName == reader.lastName;
         }
+        public override int GetHashCode()
+        {
+            int hashCode = -714586200;
+            hashCode = hashCode * -1521134295 + EqualityComparer<string>.Default.GetHashCode(name);
+            hashCode = hashCode * -1521134295 + EqualityComparer<string>.Default.GetHashCode(lastName);
+            return hashCode;
+        }
     }
 }

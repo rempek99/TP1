@@ -29,7 +29,7 @@ namespace TP1_test
         {
             Random rnd = new Random();
             string title1 = "Dziady", author1 = "Adam Mickiewicz", currency1 = "PLN";
-            int stock1 = rnd.Next(int.MaxValue);
+            int stock1 = rnd.Next(10, int.MaxValue);
             double prize1 = rnd.NextDouble() * stock1;
             BookItem testBook = new BookItem(title1, author1);
             CopyInfo testCopy = new CopyInfo(testBook, stock1, prize1, currency1);
@@ -38,27 +38,34 @@ namespace TP1_test
             Assert.True(testCopy.Equals(testCopyOfCopy));
         }
         [Fact]
-        public void BorrowingTest()
+        public void EventTest()
         {
             Random rnd = new Random();
             string title1 = "Dziady", author1 = "Adam Mickiewicz", currency1 = "PLN";
             string name1 = "Jan", lastName1 = "Kowalski";
-            int stock1 = rnd.Next(int.MaxValue);
+            int stock1 = rnd.Next(10,int.MaxValue);
             double prize1 = rnd.NextDouble() * stock1;
             Reader tester = new Reader(name1, lastName1);
             BookItem testBook = new BookItem(title1, author1);
             CopyInfo testCopy = new CopyInfo(testBook, stock1, prize1, currency1);
-            Borrowing testBorrowing = new Borrowing(tester, testCopy);
-            Assert.Contains(title1, testBorrowing.ToString());
-            Assert.Contains(name1, testBorrowing.ToString());
+            Event testEvent = new Borrowing(tester, testCopy);
+            Assert.Contains("Borrowing", testEvent.ToString());
+            Assert.Contains((prize1*0.2).ToString("0.00"), testEvent.ToString());
+            Assert.Contains(title1, testEvent.ToString());
+            Assert.Contains(name1, testEvent.ToString());
             DateTime date1 = new DateTime(2015, 1, 1);
             date1 = date1.AddDays(rnd.Next(200, 2000));
             DateTime date2 = date1.AddDays(rnd.Next(1, 200));
-            testBorrowing = new Borrowing(tester, testCopy,date1);
-            Assert.Contains(date1.ToString(), testBorrowing.ToString());
-            testBorrowing = new Borrowing(tester, testCopy, date1,date2);
+            testEvent = new Borrowing(tester, testCopy,date1);
+            Assert.Contains(date1.ToString(), testEvent.ToString());
+            testEvent = new Borrowing(tester, testCopy, date1,date2);
             Borrowing testBorrowingCopy = new Borrowing(tester, testCopy, date1,date2);
-            Assert.True(testBorrowing.Equals(testBorrowingCopy));
+            Assert.True(testEvent.Equals(testBorrowingCopy));
+            testEvent = new Purchase(tester, testCopy);
+            Assert.Contains("Purchase", testEvent.ToString());
+            Assert.Contains(title1, testEvent.ToString());
+            Assert.Contains(name1, testEvent.ToString());
+            Assert.Contains(prize1.ToString("0.00"), testEvent.ToString());
         }
     }
         public class DataRepositoryTest
@@ -115,7 +122,7 @@ namespace TP1_test
             IDataRepository repo = new DataRepository(reader);
             Random rnd = new Random();
             string title1 = "Dziady", title2 = "Wiersze", author1 = "Adam Mickiewicz", author2 = "Jan Brzechwa";
-            int stock = rnd.Next(1, 128);
+            int stock = rnd.Next(10, 128);
             double prize = rnd.NextDouble() * 30;
             string currency = "USD";
             repo.AddBookItem(title1, author1);
@@ -124,7 +131,7 @@ namespace TP1_test
             int bookKey = repo.GetKey() - rnd.Next(1, 2);
             repo.AddCopyInfo(bookKey, stock, prize, currency);
             Assert.Equal(0, repo.FindExistedCopies(bookKey, prize, currency));
-            stock = rnd.Next(1, 128);
+            stock = rnd.Next(10, 128);
             prize = rnd.NextDouble() * 30;
             currency = "PLN";
             bookKey = repo.GetKey() - rnd.Next(1, 2);
@@ -148,14 +155,14 @@ namespace TP1_test
             string name1 = "Jan", name2 = "Piotr", lastName1 = "Kowalski", lastName2 = "Nowak";
             repo.AddReader(name1, lastName1);
             repo.AddReader(name2, lastName2);
-            int stock = rnd.Next(1, 128);
+            int stock = rnd.Next(10, 128);
             double prize = rnd.NextDouble() * 30;
             string currency = "USD";
             repo.AddBookItem(title1, author1);
             repo.AddBookItem(title2, author2);
             int bookKey = repo.GetKey() - rnd.Next(1, 2);
             repo.AddCopyInfo(bookKey, stock, prize, currency);
-            stock = rnd.Next(1, 128);
+            stock = rnd.Next(10, 128);
             prize = rnd.NextDouble() * 30;
             currency = "PLN";
             bookKey = repo.GetKey() - rnd.Next(1, 2);
@@ -166,6 +173,7 @@ namespace TP1_test
             int tmp1 = rnd.Next(1, repo.GetReadersCount());
             int tmp2 = rnd.Next(1, repo.GetCopyInfosCount());
             repo.AddBorrowing(tmp1, tmp2);
+            Assert.True(repo.IsBorrowing(0));
             Assert.Equal(tmp2, repo.GetCopyInfoFromBorrowing(0));
             Assert.NotEmpty(repo.GetInfo("borrowings")[0]);
             tmp1 = rnd.Next(1, repo.GetReadersCount());
@@ -173,7 +181,7 @@ namespace TP1_test
             DateTime date1 = new DateTime(1995, 1, 1);
             date1 = date1.AddDays(rnd.Next(200,1000));
             repo.AddBorrowing(tmp1, tmp2, date1);
-            Assert.Equal(1, repo.FindBorrowing(tmp1, tmp2, date1));
+            Assert.Equal(1, repo.FindEvent(tmp1, tmp2, date1));
             tmp1 = rnd.Next(1, repo.GetReadersCount());
             tmp2 = rnd.Next(1, repo.GetCopyInfosCount());
             date1.AddDays(rnd.Next(200, 1000));
@@ -182,7 +190,11 @@ namespace TP1_test
             Assert.False(repo.IsBorrowingReturned(1));
             repo.SetBorrowingEndDate(1, DateTime.Now);
             Assert.True(repo.IsBorrowingReturned(1));
-            Assert.Equal(3, repo.GetBorrowingsCount());
+            repo.AddPurchase(0, 0);
+            repo.AddPurchase(0, 1, date2);
+            Assert.False(repo.IsBorrowing(3));
+            Assert.Contains("Purchase", repo.GetInfo("events")[3]);
+            Assert.Equal(5, repo.GetEventsCount());
             
         }
     }

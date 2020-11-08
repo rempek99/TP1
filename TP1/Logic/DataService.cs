@@ -1,7 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.ComponentModel;
-using System.Text;
 using TP1.Model;
 
 namespace TP1.Logic
@@ -38,7 +36,8 @@ namespace TP1.Logic
         public abstract bool RegisterBorrowing(int readerIndex, int copyIndex, DateTime startDate);
         public abstract bool RegisterBorrowing(int readerIndex, int copyIndex, DateTime startDate, DateTime endDate);
         public abstract bool SetReturned(int borrowingIndex);
-
+        public abstract bool RegisterPurchase(int readerIndex, int copyIndex);
+        public abstract bool RegisterPurchase(int readerIndex, int copyIndex, DateTime startDate);
 
         public abstract List<string> GetInfo(string type);
         public abstract void LoadFileData();

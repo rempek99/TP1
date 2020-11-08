@@ -32,7 +32,7 @@
 		<prize>1,40</prize>
 		<currency>usd</currency>
 	</copyInfo>
-	><borrowing>
+	<borrowing>
 		<readerIndex>0</readerIndex>
 		<copyInfoIndex>0</copyInfoIndex>
 		<startDate>03.11.2020 23:37:50</startDate>
@@ -43,4 +43,15 @@
 		<copyInfoIndex>1</copyInfoIndex>
 		<startDate>16.10.2020 12:47:10</startDate>
 	</borrowing>
+	<purchase>
+		<readerIndex>1</readerIndex>
+		<copyInfoIndex>1</copyInfoIndex>
+		<startDate>12.5.2020 09:27:15</startDate>
+	</purchase>
+	<purchase>
+		<readerIndex>0</readerIndex>
+		<copyInfoIndex>0</copyInfoIndex>
+		<startDate>1.2.2020 11:09:01</startDate>
+	</purchase>
+
 </data>

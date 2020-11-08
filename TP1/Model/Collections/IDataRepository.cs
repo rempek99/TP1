@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Text;
 
 namespace TP1.Model
 {
@@ -8,7 +7,6 @@ namespace TP1.Model
     {
 
         // READER
-        // Reader GetReader(int i);
         void AddReader(string name, string lastname);
         int FindReader(string name, string lastname);
         void RemoveReader(int readerIndex);
@@ -16,7 +14,6 @@ namespace TP1.Model
         int GetReadersCount();
 
         // BOOK ITEM
-        // BookItem GetBookItem(int key);
         void AddBookItem(string title, string author);
         int FindBookItem(string title, string author);
         void RemoveBookItem(int key);
@@ -24,19 +21,19 @@ namespace TP1.Model
         bool BookExist(int bookItemKey);
         int GetBookItemsCount();
 
-        // BORROWING
-        // Borrowing GetBorrowing(int i);
+        // EVENT
         void AddBorrowing(int readerIndex, int copyInfoIndex);
         void AddBorrowing(int readerIndex, int copyInfoIndex, DateTime startDate);
         void AddBorrowing(int readerIndex, int copyInfoIndex, DateTime startDate, DateTime endDate);
-        // void RemoveBorrowing(int borrowingIndex); //Borrowing are saved 4ever
+        void AddPurchase(int readerIndex, int copyInfoIndex);
+        void AddPurchase(int readerIndex, int copyInfoIndex, DateTime startDate);
+        bool IsBorrowing(int eventIndex);
         void SetBorrowingEndDate(int borrowingIndex, DateTime endDate);
         bool IsBorrowingReturned(int borrowingIndex);
-        int FindBorrowing(int readerIndex, int copyInfoIndex, DateTime startDate);
-        int GetBorrowingsCount();
+        int FindEvent(int readerIndex, int copyInfoIndex, DateTime startDate);
+        int GetEventsCount();
 
         // COPY INFO
-        // CopyInfo GetCopyInfo(int i);
         void AddCopyInfo(int bookItemKey, int stock, double prize, string currency);
         void RemoveCopyInfo(int copyInfoIndex);
         void UpdateCopyInfo(int copyInfoIndex, int bookItemKey, int stock,double prize,string currency);

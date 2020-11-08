@@ -1,9 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Data;
 using System.Linq;
-using System.Text;
-using TP1.Model;
 
 namespace TP1.Model
 {
@@ -65,7 +62,7 @@ namespace TP1.Model
             dataContext.books.Add(key, new BookItem(title,author));
             key++;
         }
-        public int FindBookItem(string title, string author)// SPRAWDZIC
+        public int FindBookItem(string title, string author)
         {
             BookItem pattern = new BookItem(title, author);
             int key = -1;
@@ -81,12 +78,7 @@ namespace TP1.Model
         }
         public void RemoveBookItem(int key)
         {
-            /*if(dataContext.books.ContainsKey(key))
-            {*/
-                dataContext.books.Remove(key);
-            /*return true;
-        }
-            return false;   */         
+                dataContext.books.Remove(key);       
         }
         public void UpdateBookItem(int key, string title, string author)
         {
@@ -107,37 +99,37 @@ namespace TP1.Model
             return false;
         }
 
-        // BORROWING
+        // EVENT
         public void AddBorrowing(int readerIndex, int copyInfoIndex)
         {
-            dataContext.borrowings.Add(new Borrowing(dataContext.readers[readerIndex], dataContext.copyInfos[copyInfoIndex]));
+            dataContext.events.Add(new Borrowing(dataContext.readers[readerIndex], dataContext.copyInfos[copyInfoIndex]));
         }
         public void AddBorrowing(int readerIndex, int copyInfoIndex, DateTime startDate)
         {
-            dataContext.borrowings.Add(new Borrowing(dataContext.readers[readerIndex], dataContext.copyInfos[copyInfoIndex], startDate));
+            dataContext.events.Add(new Borrowing(dataContext.readers[readerIndex], dataContext.copyInfos[copyInfoIndex], startDate));
         }
         public void AddBorrowing(int readerIndex, int copyInfoIndex, DateTime startDate, DateTime endDate)
         {
-            dataContext.borrowings.Add(new Borrowing(dataContext.readers[readerIndex], dataContext.copyInfos[copyInfoIndex], startDate,endDate));
+            dataContext.events.Add(new Borrowing(dataContext.readers[readerIndex], dataContext.copyInfos[copyInfoIndex], startDate,endDate));
         }
         public void SetBorrowingEndDate(int borrowingIndex, DateTime endDate)
         {
            /* if (!dataContext.borrowings.Contains(borrowing))
                 return false;*/
-            dataContext.borrowings[borrowingIndex].endDate = endDate;
+            dataContext.events[borrowingIndex].endDate = endDate;
            /* return true;*/
         }
         public bool IsBorrowingReturned(int borrowingIndex)
         {
-            if (dataContext.borrowings[borrowingIndex].endDate == new DateTime(0))
+            if (dataContext.events[borrowingIndex].endDate == new DateTime(0))
                 return false;
             return true;
         }
-        public int FindBorrowing(int readerIndex, int copyInfoIndex, DateTime startDate)
+        public int FindEvent(int readerIndex, int copyInfoIndex, DateTime startDate)
         {
             int i = 0;
             Borrowing pattern = new Borrowing(dataContext.readers[readerIndex], dataContext.copyInfos[copyInfoIndex], startDate);
-            foreach (Borrowing borrowing in dataContext.borrowings)
+            foreach (Borrowing borrowing in dataContext.events)
             {
                 if (borrowing.Equals(pattern))
                     return i;
@@ -145,9 +137,21 @@ namespace TP1.Model
             }
             return -1;
         }
-        public int GetBorrowingsCount()
+        public int GetEventsCount()
         {
-            return dataContext.borrowings.Count();
+            return dataContext.events.Count();
+        }
+        public void AddPurchase(int readerIndex, int copyInfoIndex)
+        {
+            dataContext.events.Add(new Purchase(dataContext.readers[readerIndex], dataContext.copyInfos[copyInfoIndex]));
+        }
+        public void AddPurchase(int readerIndex, int copyInfoIndex, DateTime eventDate)
+        {
+            dataContext.events.Add(new Purchase(dataContext.readers[readerIndex], dataContext.copyInfos[copyInfoIndex],eventDate));
+        }
+        public bool IsBorrowing(int eventIndex)
+        {
+            return dataContext.events[eventIndex].GetType().Name == "Borrowing";
         }
 
         // COPY INFO
@@ -208,7 +212,7 @@ namespace TP1.Model
         }
         public int GetCopyInfoFromBorrowing(int borrowingIndex)
         {
-            CopyInfo pattern = dataContext.borrowings[borrowingIndex].copyInfo;
+            CopyInfo pattern = dataContext.events[borrowingIndex].copyInfo;
             int i = 0;
             foreach(CopyInfo element in dataContext.copyInfos)
             {
@@ -252,9 +256,9 @@ namespace TP1.Model
                         }
                         break;
                     }
-                case "borrowings":
+                case "events":
                     {
-                        foreach (object element in dataContext.borrowings)
+                        foreach (object element in dataContext.events)
                         {
                             output.Add(i + ") " + element.ToString());
                             i++;
@@ -296,49 +300,23 @@ namespace TP1.Model
                     d[i] = new DateTime(0).ToString();
                 }
                 AddBorrowing(Convert.ToInt32(a[i]), Convert.ToInt32(b[i]), Convert.ToDateTime(c[i]), Convert.ToDateTime(d[i]));
-            }  
+            }
+            a = dataReader.readData("purchase", "readerIndex");
+            b = dataReader.readData("purchase", "copyInfoIndex");
+            c = dataReader.readData("purchase", "startDate");
+            for (int i = 0; i < a.Count(); i++)
+            {
+                if (d[i].Length == 0)
+                {
+                    d[i] = new DateTime(0).ToString();
+                }
+                AddPurchase(Convert.ToInt32(a[i]), Convert.ToInt32(b[i]), Convert.ToDateTime(c[i]));
+            }
         }
 
         public int GetKey()
         {
             return key;
         }
-
-        /* public Reader GetReader(int i)
-{
-if (dataContext.readers.Count() < i + 1)
-return null;
-return dataContext.readers[i];
-}*/
-
-        /* public BookItem GetBookItem(int key)
-         {
-             return dataContext.books[key];
-         }*/
-
-        /*  public Borrowing GetBorrowing(int i)
-          {
-              if (dataContext.borrowings.Count() < i + 1)
-                  return null;
-              return dataContext.borrowings[i];
-          }*/
-
-        /* public CopyInfo GetCopyInfo(int i)
-         {
-             if (dataContext.copyInfos.Count() < i + 1)
-                 return null;
-             return dataContext.copyInfos[i];
-         }*/
-
-        /*  public void RemoveBorrowing(int borrowingIndex)
-          {
-              if (dataContext.borrowings.Contains(borrowing))
-              {
-                  dataContext.borrowings.Remove(dataContext.borrowings[borrowingIndex]);
-              return true;
-          }
-              return false;
-          }*/
-
     }
 }

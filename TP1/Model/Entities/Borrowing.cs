@@ -1,58 +1,40 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace TP1.Model
 {
-    public class Borrowing
+    public class Borrowing : Event
     {
-        public Reader reader { get; set; }
-        public CopyInfo copyInfo { get; set; }
-        public DateTime startDate { get; set; }
-        public DateTime endDate { get; set; }
 
-        public Borrowing(Reader reader, CopyInfo copyInfo, DateTime startDate, DateTime endDate)
+        public Borrowing(Reader reader, CopyInfo copyInfo, DateTime eventDate, DateTime endDate) :base(reader,copyInfo,eventDate)
         {
-            this.reader = reader;
-            this.copyInfo = copyInfo;
-            this.startDate = startDate;
             this.endDate = endDate;
         }
 
-        public Borrowing(Reader reader, CopyInfo copyInfo, DateTime startDate)
+        public Borrowing(Reader reader, CopyInfo copyInfo, DateTime eventDate) :base(reader,copyInfo,eventDate)
         {
-            this.reader = reader;
-            this.copyInfo = copyInfo;
-            this.startDate = startDate;
         }
 
-        public Borrowing(Reader reader, CopyInfo copyInfo)
-        { 
-            this.reader = reader;
-            this.copyInfo = copyInfo;
-            this.startDate = DateTime.Now;
+        public Borrowing(Reader reader, CopyInfo copyInfo) : base(reader,copyInfo)
+        {
         }
 
-       /* public void setReturned()
+        public void setReturned()
         {
             this.endDate = DateTime.Now;
-        }*/
+        }
 
         public override string ToString()
         {
-            string output = reader.ToString() + "; " + copyInfo+ "; " + startDate;
+            string output = base.ToString();
             if (endDate != new DateTime(0))
                 output += "; " + endDate;
             return output;
         }
 
-        public override bool Equals(object obj)
+        public override double GetPrize()
         {
-            return obj is Borrowing borrowing &&
-                   EqualityComparer<Reader>.Default.Equals(reader, borrowing.reader) &&
-                   EqualityComparer<CopyInfo>.Default.Equals(copyInfo, borrowing.copyInfo) &&
-                   startDate == borrowing.startDate &&
-                   endDate == borrowing.endDate;
+            return copyInfo.prize * 0.2;
         }
+
     }
 }

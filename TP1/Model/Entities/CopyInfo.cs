@@ -35,6 +35,15 @@ namespace TP1.Model
                    prize == info.prize &&
                    currency == info.currency;
         }
+        public override int GetHashCode()
+        {
+            int hashCode = -1595896239;
+            hashCode = hashCode * -1521134295 + EqualityComparer<BookItem>.Default.GetHashCode(bookItem);
+            hashCode = hashCode * -1521134295 + stock.GetHashCode();
+            hashCode = hashCode * -1521134295 + prize.GetHashCode();
+            hashCode = hashCode * -1521134295 + EqualityComparer<string>.Default.GetHashCode(currency);
+            return hashCode;
+        }
     }
 
 }

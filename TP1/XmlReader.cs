@@ -49,7 +49,6 @@ namespace TP1
                         }  
                         break;
                 }
-                Console.WriteLine(".");
             }
 
             /*while (docReader.Read())

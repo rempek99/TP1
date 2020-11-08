@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Text;
 using TP1.Model;
 
 namespace TP1.Logic
@@ -188,7 +187,6 @@ namespace TP1.Logic
                 if (startDate > endDate)
                     return false;
                 dataRepository.AddBorrowing(readerIndex, copyIndex,startDate,endDate);
-                dataRepository.IncrementCopyInfoStock(copyIndex, -1);
             }
             catch (Exception ex)
             {
@@ -201,11 +199,45 @@ namespace TP1.Logic
         {
             try
             {
+                if (!dataRepository.IsBorrowing(borrowingIndex))
+                    return false;
                 if (dataRepository.IsBorrowingReturned(borrowingIndex))
                     return false;
                 dataRepository.SetBorrowingEndDate(borrowingIndex, DateTime.Now);
                 dataRepository.IncrementCopyInfoStock(
                     dataRepository.GetCopyInfoFromBorrowing(borrowingIndex), 1);
+            }
+            catch (Exception ex)
+            {
+                if (ex is IndexOutOfRangeException || ex is ArgumentOutOfRangeException)
+                    return false;
+            }
+            return true;
+        }
+        public override bool RegisterPurchase(int readerIndex, int copyIndex)
+        {
+            try
+            {
+                if (dataRepository.GetCopyInfoStock(copyIndex) == 0)
+                    return false;
+                dataRepository.AddPurchase(readerIndex, copyIndex);
+                dataRepository.IncrementCopyInfoStock(copyIndex, -1);
+            }
+            catch (Exception ex)
+            {
+                if (ex is IndexOutOfRangeException || ex is ArgumentOutOfRangeException)
+                    return false;
+            }
+            return true;
+        }
+        public override bool RegisterPurchase(int readerIndex, int copyIndex, DateTime startDate)
+        {
+            try
+            {
+                if (dataRepository.GetCopyInfoStock(copyIndex) == 0)
+                    return false;
+                dataRepository.AddPurchase(readerIndex, copyIndex,startDate);
+                dataRepository.IncrementCopyInfoStock(copyIndex, -1);
             }
             catch (Exception ex)
             {
@@ -224,6 +256,5 @@ namespace TP1.Logic
         {
             dataRepository.LoadDataFromFile();
         }
-
     }
 }

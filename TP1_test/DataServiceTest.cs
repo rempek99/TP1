@@ -36,18 +36,18 @@ namespace TP1_test
             Assert.False(testService.ChangeReaderData(3, name3, lastName3));
 
             Random rnd = new Random();
-            int quantity = rnd.Next(1,256);
+            int quantity = rnd.Next(10,256);
             double prize = rnd.NextDouble() * quantity;
             string currency = "PLN";
             Assert.True(testService.RegisterCopies(0, quantity, prize, currency));
-            quantity = rnd.Next(1, 256);
+            quantity = rnd.Next(10, 256);
             prize = rnd.NextDouble() * quantity;
             currency = "USD";
             Assert.True(testService.RegisterCopies(1, quantity, prize, currency));
             Assert.True(testService.RegisterCopies(1, quantity, prize, currency));
             Assert.Equal(2, testService.GetInfo("copyInfos").Count);
             Assert.Contains((quantity * 2).ToString(), testService.GetInfo("copyInfos")[1]);
-            quantity = rnd.Next(1, 256);
+            quantity = rnd.Next(10, 256);
             prize = rnd.NextDouble() * quantity;
             currency = "EUR";
             Assert.True(testService.ChangeCopiesData(0, 1, quantity, prize, currency));
@@ -57,6 +57,9 @@ namespace TP1_test
             Assert.Contains(prize.ToString("0.00"), testService.GetInfo("copyInfos")[0]);
             Assert.Contains(currency.ToString(), testService.GetInfo("copyInfos")[0]);
             Assert.False(testService.ChangeCopiesData(3, 1, quantity, prize, currency));
+            int tmp = rnd.Next(1, quantity);
+            Assert.True(testService.RetractCopies(0, tmp));
+            Assert.Equal(quantity - tmp, testService.GetQuantity(0));
 
             DateTime date1 = new DateTime(1995, 1, 1);
             date1 = date1.AddDays(rnd.Next(200, 1000));
@@ -69,9 +72,12 @@ namespace TP1_test
             Assert.False(testService.RegisterBorrowing(0, 2,date1));
             Assert.False(testService.RegisterBorrowing(2, 0));
             Assert.False(testService.RegisterBorrowing(2, 2,date1,date2));
+            Assert.True(testService.RegisterPurchase(0, 0));
+            Assert.True(testService.RegisterPurchase(1, 0, date2));
+            Assert.False(testService.SetReturned(3));
             // date 1 < date2
             Assert.False(testService.RegisterBorrowing(0, 0, date2, date1));
-            Assert.Equal(3, testService.GetInfo("borrowings").Count);
+            Assert.Equal(5, testService.GetInfo("events").Count);
             Assert.True(testService.SetReturned(0));
             Assert.False(testService.SetReturned(0));
 
@@ -84,10 +90,8 @@ namespace TP1_test
             Assert.False(testService.RemoveBookItem(0));
             Assert.False(testService.ChangeBookItemData(1, title3, author3));
             Assert.True(testService.RetractCopies(1));
-            int tmp = rnd.Next(1, quantity);
-            Assert.True(testService.RetractCopies(0, tmp));
-            Assert.Equal(quantity - tmp, testService.GetQuantity(0));
             Assert.False(testService.ChangeCopiesData(1, 1, quantity, prize, currency));
+
         }
     }
 }

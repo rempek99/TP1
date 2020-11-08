@@ -13,7 +13,7 @@ namespace TP1_test
         [Fact]
         public void XMLReaderTest()
         {
-            // Data.xml file contains info about 3 readers, 2 bookItems, 2 copyInfos and 2 borrowings
+            // Data.xml file contains info about 3 readers, 2 bookItems, 2 copyInfos, 2 borrowings and 2 puchaces
             DataService library = new LibraryManager(new DataRepository(new XmlReader("data.xml")));
             Assert.Empty(library.GetInfo("readers"));
             library.LoadFileData();
@@ -21,7 +21,8 @@ namespace TP1_test
             Assert.Equal(3, library.GetInfo("readers").Count);
             Assert.Equal(2, library.GetInfo("bookItems").Count);
             Assert.Equal(2, library.GetInfo("copyInfos").Count);
-            Assert.Equal(2, library.GetInfo("borrowings").Count);
+            Assert.Equal(4, library.GetInfo("events").Count);
+            
         }
     }
 }
