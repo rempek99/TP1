@@ -1,14 +1,21 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.Serialization;
 
 namespace TP1.Model
 {
     public class DataRepository : IDataRepository
     {
-        private DataContext dataContext;
-        private int key;
+        public DataContext dataContext;
+        public int key;
         private IDataReaderFromFile dataReader { get;  set; }
+
+        public DataRepository()
+        {
+            this.dataContext = new DataContext();
+            this.key = 0;
+        }
 
         public DataRepository(IDataReaderFromFile dataReader)
         {

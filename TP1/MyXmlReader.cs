@@ -6,11 +6,11 @@ using TP1.Model;
 
 namespace TP1
 {
-    public class XmlReader : IDataReaderFromFile
+    public class MyXmlReader : IDataReaderFromFile
     {
         public string filePath { get; set; }
 
-        public XmlReader(string filePath)
+        public MyXmlReader(string filePath)
         {
             this.filePath = filePath;
         }

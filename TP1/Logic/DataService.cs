@@ -7,9 +7,13 @@ namespace TP1.Logic
     public abstract class DataService
     {
 
-        protected IDataRepository dataRepository;
+        public DataRepository dataRepository;
 
-        protected DataService(IDataRepository dataRepository)
+        protected DataService()
+        { 
+        }
+
+        protected DataService(DataRepository dataRepository)
         {
             this.dataRepository = dataRepository;
         }

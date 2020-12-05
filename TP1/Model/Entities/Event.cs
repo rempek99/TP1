@@ -1,15 +1,26 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Text;
+using System.Runtime.Serialization;
 
 namespace TP1.Model
 {
+    [DataContract, KnownType(typeof(Borrowing)),KnownType(typeof(Purchase))]
+
     public abstract class Event
     {
+        [DataMember]
         public Reader reader { get; set; }
+        [DataMember]
         public CopyInfo copyInfo { get; set; }
+        [DataMember]
         public DateTime eventDate { get; set; }
+        [DataMember]
         public DateTime endDate { get; set; }
+
+        protected Event()
+        {
+        }
+
         public Event(Reader reader, CopyInfo copyInfo)
         {
             this.reader = reader;

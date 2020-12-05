@@ -1,11 +1,20 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
+using System.Runtime.Serialization;
 
 namespace TP1.Model
 {
+    [DataContract]
     public class BookItem
     {
+        [DataMember]
         public string title { get; set; }
+        [DataMember]
         public string author { get; set; }
+
+        public BookItem()
+        {
+        }
 
         public BookItem(string title, string author)
         {
@@ -22,7 +31,7 @@ namespace TP1.Model
 
         public override string ToString()
         {
-            return "\"" + title + "\"" + ", " + author;
+            return  "\"" + title + "\"" + ", " + author;
         }
 
         public override int GetHashCode()

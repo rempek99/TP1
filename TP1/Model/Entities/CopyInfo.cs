@@ -1,18 +1,23 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-using TP1;
-
-
+﻿using System.Collections.Generic;
+using System.Runtime.Serialization;
 
 namespace TP1.Model
 {
+    [DataContract]
     public class CopyInfo
     {
+        [DataMember]
         public BookItem bookItem { get; set; }
+        [DataMember]
         public int stock { get; set; }
+        [DataMember]
         public double prize { get; set; }
+        [DataMember]
         public string currency { get; set; }
+
+        public CopyInfo()
+        {
+        }
 
         public CopyInfo(BookItem bookItem, int stock, double prize, string currency)
         {

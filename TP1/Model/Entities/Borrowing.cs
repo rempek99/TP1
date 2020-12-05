@@ -1,10 +1,13 @@
 ﻿using System;
+using System.Runtime.Serialization;
 
 namespace TP1.Model
 {
+    [DataContract]
     public class Borrowing : Event
     {
-
+        public Borrowing() : base()
+        { }
         public Borrowing(Reader reader, CopyInfo copyInfo, DateTime eventDate, DateTime endDate) :base(reader,copyInfo,eventDate)
         {
             this.endDate = endDate;

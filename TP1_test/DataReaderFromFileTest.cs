@@ -14,7 +14,7 @@ namespace TP1_test
         public void XMLReaderTest()
         {
             // Data.xml file contains info about 3 readers, 2 bookItems, 2 copyInfos, 2 borrowings and 2 puchaces
-            DataService library = new LibraryManager(new DataRepository(new XmlReader("data.xml")));
+            DataService library = new LibraryManager(new DataRepository(new MyXmlReader("data.xml")));
             Assert.Empty(library.GetInfo("readers"));
             library.LoadFileData();
             Assert.NotEmpty(library.GetInfo("readers"));

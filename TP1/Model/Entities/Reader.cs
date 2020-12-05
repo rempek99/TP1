@@ -1,13 +1,20 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
+﻿using System.Collections.Generic;
+using System.Runtime.Serialization;
 
 namespace TP1.Model
 {
-    public class Reader //: Ccllient
+    [DataContract]
+    public class Reader
     {
+        [DataMember]
         public string name { get; set; }
+        [DataMember]
         public string lastName { get; set; }
+
+        public Reader()
+        {
+        }
+
         public Reader(string name, string lastName)
         {
             this.name = name;

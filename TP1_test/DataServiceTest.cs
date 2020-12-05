@@ -14,7 +14,7 @@ namespace TP1_test
         [Fact]
         public void MethodsTest()
         {
-            DataService testService = new LibraryManager(new DataRepository(new XmlReader("path")));
+            DataService testService = new LibraryManager(new DataRepository(new MyXmlReader("path")));
             string title1 = "Dziady", title2 = "Wiersze",title3 = "Treny" , author1 = "Adam Mickiewicz", author2 = "Jan Brzechwa", author3 = "Jan Kochanowski";
             string name1 = "Jan", name2 = "Piotr", name3="Adam", lastName1 = "Kowalski", lastName2 = "Nowak", lastName3 = "Puszek";
             Assert.True(testService.AddNewBookItem(title1, author1));

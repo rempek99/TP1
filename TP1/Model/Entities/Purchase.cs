@@ -1,11 +1,13 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Text;
+using System.Runtime.Serialization;
 
 namespace TP1.Model
 {
+    [DataContract]
     public class Purchase : Event
     {
+        public Purchase() : base()
+        { }
         public Purchase(Reader reader, CopyInfo copyInfo) : base(reader, copyInfo)
         {
         }

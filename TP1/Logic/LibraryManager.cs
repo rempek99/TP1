@@ -1,12 +1,18 @@
 ﻿using System;
+using System.Xml.Serialization;
 using System.Collections.Generic;
 using TP1.Model;
 
 namespace TP1.Logic
 {
+/*    [XmlRootAttribute("PurchaseOrder", Namespace = "http://www.cpandl.com",
+IsNullable = false)]*/
     public class LibraryManager : DataService
     {
-        public LibraryManager(IDataRepository dataRepository) : base(dataRepository)
+        public LibraryManager() : base()
+        {
+        }
+        public LibraryManager(DataRepository dataRepository) : base(dataRepository)
         {
         }
 
