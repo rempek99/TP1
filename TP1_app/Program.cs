@@ -1,115 +1,112 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using Serialization;
-using TP1;
+using SampleClasses;
 using TP1.Logic;
 using TP1.Model;
 
 namespace TP1_app
 {
-    public class Person
-    {
-        public string name { get; set; }
-        public Person friend;
-        public Pet pet;
-    }
-    public class Pet
-    {
-        public string race { get; set; }
-    }
-    public class Group
-    {
-        public List<Pet> pets;
-        public List<Person> people;
-        public Group()
-        {
-            pets = new List<Pet>();
-            people = new List<Person>();
-        }
-        public void add(Person p)
-        {
-            people.Add(p);
-        }
-        public void addPet(Pet p)
-        {
-            pets.Add(p);
-        }
-    }
-
 class Program
     {
-       
+        bool filled = false;
+        public static void FillWithSampleData(LibraryManager manager)
+        {
+            manager.AddNewReader("Jacek", "Kowal");
+            manager.AddNewReader("Aneta", "Dzwon");
+            manager.AddNewBookItem("Dziady", "Adam Mickiewicz");
+            manager.RegisterCopies(0, 20, 10.20, "pln");
+            manager.RegisterCopies(0, 1, 10.99, "pln");
+            manager.RegisterBorrowing(1, 0);
+            manager.RegisterPurchase(0, 0);
+        }
         static void Main(string[] args)
         {
-
-            //Event evt = new Borrowing(new Reader("Adam", "Jakis"), new CopyInfo(new BookItem("Ksiazka", "Autor"), 200, 10.40, "PLN"));
-
-            Group group = new Group();
-            Person p1 = new Person(), p2 = new Person();
-            Pet pet1 = new Pet(), pet2 = new Pet();
-            p1.name = "Adam";
-            p2.name = "Joasia";
-            pet1.race = "Jamnik";
-            pet2.race = "Buldog";
-            group.addPet(pet1);
-            group.addPet(pet2);
-            group.add(p1);
-            group.add(p2);
-            p1.pet = group.pets[0];
-            p1.friend = group.people[1];
-
-            MyXmlSerializer2.Write(typeof(Group), group, "test.xml");
-            //Group group2 = (Group)MyXmlSerializer.ReadManagerFile(typeof(Group), "test.xml");
-            //Console.WriteLine(group2.ToString());
-
-            /*        
-                    DataRepository dataRepository = new DataRepository();
-                    dataRepository.AddBookItem("jeden", "pierwszy");
-                    dataRepository.AddBookItem("dwa", "drugi");
-                    dataRepository.AddCopyInfo(0, 100, 20.01, "PLN");
-                    dataRepository.AddReader("Jacek", "Stachursky");
-                    dataRepository.AddBorrowing(0, 0);
-                    MyXmlSerializer.CreateManagerFile(typeof(DataRepository), dataRepository, "plik.xml");
-                    DataRepository dataRepository1 = (DataRepository) MyXmlSerializer.ReadManagerFile(typeof(DataRepository), "plik.xml");
-                    Console.WriteLine(dataRepository1.ToString());
-        */
-
-           /* MyXmlReader x = new MyXmlReader("data.xml");
-            List<string> tmp = x.readData("reader", "name");
-            Console.WriteLine("Imiona czytelnikow zapisane w pliku: ");
-            foreach (string info in tmp)
-                Console.WriteLine(info);
-
-            LibraryManager libraryManager = new LibraryManager(new DataRepository(x));
-            libraryManager.LoadFileData();
-            libraryManager.AddNewReader("Jacek", "Kowal");
-            libraryManager.AddNewReader("Aneta", "Dzwon");
-            libraryManager.AddNewBookItem("Dziady", "Adam Mickiewicz");
-            libraryManager.RegisterCopies(0, 20, 10.20, "pln");
-            libraryManager.RegisterCopies(0, 1, 10.99, "pln");
-            libraryManager.RegisterBorrowing(1, 0);
-            libraryManager.RegisterPurchase(0, 0);
-            foreach (string borrowing in libraryManager.GetInfo("events"))
-                Console.WriteLine(borrowing);
-            Console.ReadLine();
-            MyXmlSerializer.CreateManagerFile(typeof(LibraryManager), libraryManager, "plik.xml");
-
-            LibraryManager managerBackup = (LibraryManager)MyXmlSerializer.ReadManagerFile(typeof(LibraryManager), "plik.xml");
-            Console.WriteLine("ORIGINAL:");
-            Console.WriteLine(libraryManager.dataRepository.dataContext.copyInfos.First().bookItem.ToString());
-            libraryManager.dataRepository.dataContext.books.Values.Last().author = "zamianka";
-            Console.WriteLine(libraryManager.dataRepository.dataContext.copyInfos.First().bookItem.ToString());
-            //Console.WriteLine(libraryManager.dataRepository.dataContext.books.Values.Last().ToString());
-            Console.WriteLine("Backup:");
-            Console.WriteLine(managerBackup.dataRepository.dataContext.copyInfos.First().bookItem.ToString());
-            managerBackup.dataRepository.dataContext.books.Values.Last().author = "zamianka";
-            Console.WriteLine(managerBackup.dataRepository.dataContext.copyInfos.First().bookItem.ToString());
-            foreach (String evt in managerBackup.GetInfo("events"))
+            
+            bool filled_in = false;
+            LibraryManager libraryManager = new LibraryManager(new DataRepository());
+            CustomSerialization serializer = new CustomSerialization(typeof(Class1));
+            Class3 c3 = new Class3(DateTime.Now, null);
+            Class2 c2 = new Class2("content", c3);
+            Class1 c1 = new Class1(20, c2);
+            bool cont = true;
+            string filename = "serialization.xml";
+            string menu1 = "1) Serializacja XML\n2) Serializacja wlasna\n3) Deserializacja XML\n4) Deserializacja wlasna\n5) Manager Info\n6) SampleClass Info\n0) Koniec\n";
+            string komunikat = "";
+            string output = "";
+            c3.refC1 = c1;
+            char input = 'c';
+            while(cont)
             {
-                libraryManager.GetInfo("events");
-                Console.WriteLine(evt);
-            }*/
+                Stream stream;
+                Console.Clear();
+                output = komunikat + menu1 + "Wybor: ";
+                komunikat = "";
+                Console.WriteLine(output);
+                input = Console.ReadKey().KeyChar;
+                switch(input)
+                {
+                    case '1':
+                        if(!filled_in)
+                        {
+                            Console.WriteLine("Wypelnic managera gotowymi danymi? [y/n]");
+                            if (Console.ReadKey().KeyChar == 'y')
+                            {
+                                FillWithSampleData(libraryManager);
+                                filled_in = true;
+                            }
+                        }
+                        Console.WriteLine("Podaj nazwe pliku zapisu: ");
+                        filename = Console.ReadLine();
+                        MyXmlSerializer.CreateFile(typeof(LibraryManager), libraryManager, filename);
+                        komunikat = "Zapisano do " + filename + '\n';
+                        break;
+                    case '2':
+                        Console.WriteLine("Podaj nazwe pliku zapisu: ");
+                        filename = Console.ReadLine();
+                        //stream = File.Open(filename, FileMode.Create);
+                        using (FileStream my_stream = File.Open(filename, FileMode.Create))
+                        {
+                            serializer.Serialize(my_stream, c1);
+                        }
+                        komunikat = "Zapisano do " + filename + '\n';
+                        break;
+                    case '3':
+                        Console.WriteLine("Podaj nazwe pliku odczytu: ");
+                        filename = Console.ReadLine();
+                        libraryManager = (LibraryManager) MyXmlSerializer.ReadFile(typeof(LibraryManager), filename);
+                        komunikat = "Odczytano z " + filename + '\n';
+                        break;
+                    case '4':
+                        Console.WriteLine("Podaj nazwe pliku odczytu: ");
+                        filename = Console.ReadLine();
+                        //stream = File.Open(filename, FileMode.Open);
+                        //stream.Position = 0;
+                        using (FileStream my_stream = File.Open(filename, FileMode.Open))
+                        {
+                            c1 = (Class1)serializer.Deserialize(my_stream, true);
+                        }
+                            //stream.Dispose();
+                        //stream.Close();
+                        komunikat = "Odczytano z " + filename + '\n';
+                        break;
+                    case '5':
+                        foreach (string s in libraryManager.GetInfo("events"))
+                            komunikat += s + '\n';
+                        komunikat += '\n';
+                        break;
+                    case '6':
+                        komunikat = c1.ToString() + '\n';
+                        break;
+                    case '0':
+                        cont = false;
+                        break;
+                }
+            }
+
         }
+    
     }
 }

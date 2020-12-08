@@ -3,25 +3,26 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Runtime.Serialization;
 
-namespace TP1.Model
+namespace TP1copy.Model
 {
-    [DataContract]
-    public class DataRepository : IDataRepository
+    [Serializable()]
+    public class DataRepository : IDataRepository, ISerializable
     {
-        [DataMember]
-        public DataContext dataContext;
-        [DataMember]
+        public Guid id { get; set; }
+        public DataContext dataContext { get; set; }
         public int key{ get; set; }
     private IDataReaderFromFile dataReader { get;  set; }
 
         public DataRepository()
         {
+            id = Guid.NewGuid();
             this.dataContext = new DataContext();
             this.key = 0;
         }
 
         public DataRepository(IDataReaderFromFile dataReader)
         {
+            id = Guid.NewGuid();
             this.dataReader = dataReader;
             this.dataContext = new DataContext();
             this.key = 0;
@@ -327,6 +328,13 @@ namespace TP1.Model
         public int GetKey()
         {
             return key;
+        }
+
+        public void GetObjectData(SerializationInfo info, StreamingContext context)
+        {
+            info.AddValue("id", id);
+            info.AddValue("dataContext", dataContext);
+            info.AddValue("key", key);
         }
     }
 }

@@ -1,19 +1,20 @@
 ﻿using System;
-using System.Xml.Serialization;
 using System.Collections.Generic;
-using TP1.Model;
 using System.Runtime.Serialization;
+using TP1copy.Model;
 
-namespace TP1.Logic
+namespace TP1copy.Logic
 {
-    [DataContract (Namespace ="http://TP/")]
-    public class LibraryManager : DataService
+    public class LibraryManager : DataService, ISerializable
     {
+        public Guid id { get; set; }
         public LibraryManager() : base()
         {
+            id = Guid.NewGuid();
         }
         public LibraryManager(DataRepository dataRepository) : base(dataRepository)
         {
+            id = Guid.NewGuid();
         }
 
         // READER
@@ -261,6 +262,12 @@ namespace TP1.Logic
         public override void LoadFileData()
         {
             dataRepository.LoadDataFromFile();
+        }
+
+        public void GetObjectData(SerializationInfo info, StreamingContext context)
+        {
+            info.AddValue("id", id);
+            info.AddValue("dataRepository", dataRepository);
         }
     }
 }

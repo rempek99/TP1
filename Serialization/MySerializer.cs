@@ -8,7 +8,7 @@ using System.Xml.Serialization;
 
 namespace Serialization
 {
-    public class MyXmlSerializer2
+    public class MySerializer
     {
         public static void Write(Type type,Object obj, String filename)
         {

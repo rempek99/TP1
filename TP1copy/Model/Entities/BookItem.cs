@@ -2,25 +2,25 @@
 using System.Collections.Generic;
 using System.Runtime.Serialization;
 
-namespace TP1.Model
+namespace TP1copy.Model
 {
-    [DataContract]
-    public class BookItem 
+    [Serializable()]
+    public class BookItem :ISerializable
     {
-        [DataMember]
+        public Guid id { get; set; }
         public string title { get; set; }
-        [DataMember]
         public string author { get; set; }
 
         public BookItem()
         {
-    
+            id = Guid.NewGuid();
         }
 
         public BookItem(string title, string author)
         {
             this.title = title;
             this.author = author;
+            id = Guid.NewGuid();
         }
 
         public override bool Equals(object obj)
@@ -41,6 +41,19 @@ namespace TP1.Model
             hashCode = hashCode * -1521134295 + EqualityComparer<string>.Default.GetHashCode(title);
             hashCode = hashCode * -1521134295 + EqualityComparer<string>.Default.GetHashCode(author);
             return hashCode;
+        }
+
+        public void GetObjectData(SerializationInfo info, StreamingContext context)
+        {
+            info.AddValue("title", title);
+            info.AddValue("author", author);
+            info.AddValue("id", id);
+        }
+        public BookItem(SerializationInfo info, StreamingContext context)
+        {
+            title = (string)info.GetValue("title", typeof(string));
+            author = (string)info.GetValue("author", typeof(string));
+            id = (Guid)info.GetValue("id", typeof(Guid));
         }
     }
 }

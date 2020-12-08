@@ -1,0 +1,57 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<data>
+	<reader>
+		<name>Janusz</name>
+		<lastName>Walczuk</lastName>
+	</reader>
+	<reader>
+		<name>Aneta</name>
+		<lastName>Nowak</lastName>
+	</reader>
+	<reader>
+		<name>Karolina</name>
+		<lastName>Pstryk</lastName>
+	</reader>
+	<book>
+		<title>Dziady</title>
+		<author>Adam Mickiewicz</author>
+	</book>
+	<book>
+		<title>Lalka</title>
+		<author>Boleslaw Prus</author>
+	</book>
+	<copyInfo>
+		<bookItemKey>1</bookItemKey>
+		<stock>12</stock>
+		<prize>12,40</prize>
+		<currency>pln</currency>
+	</copyInfo>
+	<copyInfo>
+		<bookItemKey>0</bookItemKey>
+		<stock>6</stock>
+		<prize>1,40</prize>
+		<currency>usd</currency>
+	</copyInfo>
+	<borrowing>
+		<readerIndex>0</readerIndex>
+		<copyInfoIndex>0</copyInfoIndex>
+		<startDate>03.11.2020 23:37:50</startDate>
+		<endDate>06.11.2020 23:37:50</endDate>
+	</borrowing>
+	<borrowing>
+		<readerIndex>2</readerIndex>
+		<copyInfoIndex>1</copyInfoIndex>
+		<startDate>16.10.2020 12:47:10</startDate>
+	</borrowing>
+	<purchase>
+		<readerIndex>1</readerIndex>
+		<copyInfoIndex>1</copyInfoIndex>
+		<startDate>12.5.2020 09:27:15</startDate>
+	</purchase>
+	<purchase>
+		<readerIndex>0</readerIndex>
+		<copyInfoIndex>0</copyInfoIndex>
+		<startDate>1.2.2020 11:09:01</startDate>
+	</purchase>
+
+</data>

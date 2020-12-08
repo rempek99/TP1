@@ -2,23 +2,20 @@
 using System.Collections.Generic;
 using System.Runtime.Serialization;
 
-namespace TP1.Model
+namespace TP1copy.Model
 {
-    [DataContract]
-    public class CopyInfo 
+    [Serializable()]
+    public class CopyInfo :ISerializable
     {
-        [DataMember]
+        public Guid id { get; set; }
         public BookItem bookItem { get; set; }
-        [DataMember]
         public int stock { get; set; }
-        [DataMember]
         public double prize { get; set; }
-        [DataMember]
         public string currency { get; set; } 
 
         public CopyInfo()
         {
-            
+            id = Guid.NewGuid();
         }
 
         public CopyInfo(BookItem bookItem, int stock, double prize, string currency)
@@ -27,6 +24,7 @@ namespace TP1.Model
             this.stock = stock;
             this.prize = prize;
             this.currency = currency;
+            id = Guid.NewGuid();
         }
 
         override public string ToString()
@@ -50,6 +48,23 @@ namespace TP1.Model
             hashCode = hashCode * -1521134295 + prize.GetHashCode();
             hashCode = hashCode * -1521134295 + EqualityComparer<string>.Default.GetHashCode(currency);
             return hashCode;
+        }
+
+        public void GetObjectData(SerializationInfo info, StreamingContext context)
+        {
+            info.AddValue("bookItem", bookItem);
+            info.AddValue("stock", stock);
+            info.AddValue("prize", prize);
+            info.AddValue("currency", currency);
+            info.AddValue("id", id);
+        }
+        public CopyInfo(SerializationInfo info, StreamingContext context)
+        {
+            bookItem = (BookItem)info.GetValue("bookItem", typeof(BookItem));
+            stock = (int)info.GetValue("stock", typeof(int));
+            prize = (double)info.GetValue("prize", typeof(double));
+            currency = (string)info.GetValue("currency", typeof(string));
+            id = (Guid)info.GetValue("id", typeof(Guid));
         }
     }
 

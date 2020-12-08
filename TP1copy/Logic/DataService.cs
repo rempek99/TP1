@@ -1,15 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Runtime.Serialization;
-using TP1.Model;
+using TP1copy.Model;
 
-namespace TP1.Logic
+namespace TP1copy.Logic
 {
-    [DataContract, KnownType(typeof(LibraryManager))]
     public abstract class DataService
     {
-        [DataMember]
-        public DataRepository dataRepository;
+        public DataRepository dataRepository { get; set; }
 
         protected DataService()
         { 

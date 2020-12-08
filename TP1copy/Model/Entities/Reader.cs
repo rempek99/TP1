@@ -1,22 +1,24 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Runtime.Serialization;
 
-namespace TP1.Model
+namespace TP1copy.Model
 {
-    [DataContract]
-    public class Reader 
+    [Serializable()]
+    public class Reader : ISerializable
     {
-        [DataMember]
+        public Guid id { get; set; }
         public string name { get; set; }
-        [DataMember]
         public string lastName { get; set; } 
 
         public Reader()
         {
+            id = Guid.NewGuid();
         }
 
         public Reader(string name, string lastName)
         {
+            id = Guid.NewGuid();
             this.name = name;
             this.lastName = lastName;
         }
@@ -39,6 +41,19 @@ namespace TP1.Model
             hashCode = hashCode * -1521134295 + EqualityComparer<string>.Default.GetHashCode(name);
             hashCode = hashCode * -1521134295 + EqualityComparer<string>.Default.GetHashCode(lastName);
             return hashCode;
+        }
+
+        public void GetObjectData(SerializationInfo info, StreamingContext context)
+        { 
+            info.AddValue("name", name);
+            info.AddValue("lastName", lastName);
+            info.AddValue("id",id);
+        }
+        public Reader(SerializationInfo info, StreamingContext context)
+        {
+            name = (string)info.GetValue("name", typeof(string));
+            lastName = (string)info.GetValue("lastname", typeof(string));
+            id = (Guid)info.GetValue("id", typeof(Guid));
         }
     }
 }

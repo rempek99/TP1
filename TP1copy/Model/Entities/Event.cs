@@ -2,32 +2,32 @@
 using System.Collections.Generic;
 using System.Runtime.Serialization;
 
-namespace TP1.Model
+namespace TP1copy.Model
 {
-    [DataContract, KnownType(typeof(Borrowing)),KnownType(typeof(Purchase))]
-    public abstract class Event
+    [Serializable()]
+    public abstract class Event : ISerializable
     {
-        [DataMember]
+        public Guid id { get; set; }
         public Reader reader { get; set; }
-        [DataMember]
         public CopyInfo copyInfo { get; set; }
-        [DataMember]
         public DateTime eventDate { get; set; }
-        [DataMember]
         public DateTime endDate { get; set; }
 
         protected Event()
-        { 
+        {
+            id = Guid.NewGuid();
         }
 
         public Event(Reader reader, CopyInfo copyInfo)
         {
+            id = Guid.NewGuid();
             this.reader = reader;
             this.copyInfo = copyInfo;
             this.eventDate = DateTime.Now;
         }
         public Event(Reader reader, CopyInfo copyInfo, DateTime eventDate)
         {
+            id = Guid.NewGuid();
             this.reader = reader;
             this.copyInfo = copyInfo;
             this.eventDate = eventDate;
@@ -59,6 +59,23 @@ namespace TP1.Model
                    EqualityComparer<CopyInfo>.Default.Equals(copyInfo, @event.copyInfo) &&
                    eventDate == @event.eventDate &&
                    endDate == @event.endDate;
+        }
+
+        public void GetObjectData(SerializationInfo info, StreamingContext context)
+        {
+            info.AddValue("id", id);
+            info.AddValue("reader", reader);
+            info.AddValue("copyInfo", copyInfo);
+            info.AddValue("eventDate", eventDate);
+            info.AddValue("endDate", endDate);
+        }
+        public Event(SerializationInfo info, StreamingContext context)
+        {
+            id = (Guid)info.GetValue("id", typeof(Guid));
+            reader = (Reader)info.GetValue("reader", typeof(Reader));
+            copyInfo = (CopyInfo)info.GetValue("copyInfo", typeof(CopyInfo));
+            eventDate = (DateTime)info.GetValue("eventDate", typeof(DateTime));
+            endDate = (DateTime)info.GetValue("endDate", typeof(DateTime));
         }
     }
 

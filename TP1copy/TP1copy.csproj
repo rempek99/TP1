@@ -4,11 +4,11 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{7B29072E-07F1-4181-950C-DD83B6520FE1}</ProjectGuid>
+    <ProjectGuid>{07FAB965-A0FF-481D-B1F9-70646401F5BA}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>Serialization</RootNamespace>
-    <AssemblyName>Serialization</AssemblyName>
+    <RootNamespace>TP1copy</RootNamespace>
+    <AssemblyName>TP1copy</AssemblyName>
     <TargetFrameworkVersion>v4.7.2</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <Deterministic>true</Deterministic>
@@ -33,7 +33,6 @@
   <ItemGroup>
     <Reference Include="System" />
     <Reference Include="System.Core" />
-    <Reference Include="System.Runtime.Serialization" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
@@ -42,10 +41,23 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="CustomSerialization.cs" />
-    <Compile Include="MyXmlSerializer.cs" />
-    <Compile Include="MySerializer.cs" />
+    <Compile Include="IDataReaderFromFile.cs" />
+    <Compile Include="Logic\DataService.cs" />
+    <Compile Include="Logic\LibraryManager.cs" />
+    <Compile Include="Model\Collections\DataContext.cs" />
+    <Compile Include="Model\Collections\DataRepository.cs" />
+    <Compile Include="Model\Collections\IDataRepository.cs" />
+    <Compile Include="Model\Entities\BookItem.cs" />
+    <Compile Include="Model\Entities\Borrowing.cs" />
+    <Compile Include="Model\Entities\CopyInfo.cs" />
+    <Compile Include="Model\Entities\Event.cs" />
+    <Compile Include="Model\Entities\Purchase.cs" />
+    <Compile Include="Model\Entities\Reader.cs" />
+    <Compile Include="MyXmlReader.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Resources\data.xml" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
