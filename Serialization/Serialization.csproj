@@ -43,6 +43,8 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="CustomSerialization.cs" />
+    <Compile Include="MyBinder.cs" />
+    <Compile Include="MyFormatter.cs" />
     <Compile Include="MyXmlSerializer.cs" />
     <Compile Include="MySerializer.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

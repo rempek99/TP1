@@ -15,17 +15,13 @@ namespace TestSerialization
         [TestMethod]
         public void Test1()
         {
-            CustomSerialization serializer = new CustomSerialization(typeof(Class1));
+            MyFormatter serializer = new MyFormatter();
             Class3 c3 = new Class3(DateTime.Now, null);
             Class2 c2 = new Class2("content", c3);
             Class1 c1 = new Class1(20, c2);
             c3.refC1 = c1;
-            Stream stream = File.Open("sample.dat", FileMode.Create);
-            serializer.Serialize(stream, c1);
-            stream.Close();
-            stream = File.Open("sample.dat", FileMode.Open);
-            Class1 c1Copy = (Class1)serializer.Deserialize(stream, true);
-            stream.Close();
+            CustomSerialization.CreateFile(c1, "sample.dat");
+            Class1 c1Copy = (Class1) CustomSerialization.ReadFile("sample.dat");
             c2.contentString = "zmiana";
             Assert.IsNotNull(c1Copy.refC2);
             Assert.IsNotNull(c1Copy.refC2.refC3);

@@ -24,10 +24,22 @@ class Program
         }
         static void Main(string[] args)
         {
-            
+
+            /*  MyFormatter serializer = new MyFormatter();
+              Class3 c3 = new Class3(DateTime.Now, null);
+              Class2 c2 = new Class2("content", c3);
+              Class1 c1 = new Class1(20, c2);
+              c3.refC1 = c1;
+              Stream stream = File.Open("sample.dat", FileMode.Create);
+              serializer.Serialize(stream, c1);
+              stream.Close();
+              Stream stream_reader = File.Open("sample.dat", FileMode.Open);
+              object o = serializer.Deserialize(stream_reader);
+              stream.Close();*/
+
+
             bool filled_in = false;
             LibraryManager libraryManager = new LibraryManager(new DataRepository());
-            CustomSerialization serializer = new CustomSerialization(typeof(Class1));
             Class3 c3 = new Class3(DateTime.Now, null);
             Class2 c2 = new Class2("content", c3);
             Class1 c1 = new Class1(20, c2);
@@ -35,21 +47,21 @@ class Program
             string filename = "serialization.xml";
             string menu1 = "1) Serializacja XML\n2) Serializacja wlasna\n3) Deserializacja XML\n4) Deserializacja wlasna\n5) Manager Info\n6) SampleClass Info\n0) Koniec\n";
             string komunikat = "";
-            string output = "";
+            string output;
             c3.refC1 = c1;
             char input = 'c';
-            while(cont)
+            while (cont)
             {
-                Stream stream;
                 Console.Clear();
                 output = komunikat + menu1 + "Wybor: ";
                 komunikat = "";
                 Console.WriteLine(output);
                 input = Console.ReadKey().KeyChar;
-                switch(input)
+                Console.WriteLine();
+                switch (input)
                 {
                     case '1':
-                        if(!filled_in)
+                        if (!filled_in)
                         {
                             Console.WriteLine("Wypelnic managera gotowymi danymi? [y/n]");
                             if (Console.ReadKey().KeyChar == 'y')
@@ -66,30 +78,19 @@ class Program
                     case '2':
                         Console.WriteLine("Podaj nazwe pliku zapisu: ");
                         filename = Console.ReadLine();
-                        //stream = File.Open(filename, FileMode.Create);
-                        using (FileStream my_stream = File.Open(filename, FileMode.Create))
-                        {
-                            serializer.Serialize(my_stream, c1);
-                        }
+                        CustomSerialization.CreateFile(c1,filename);
                         komunikat = "Zapisano do " + filename + '\n';
                         break;
                     case '3':
                         Console.WriteLine("Podaj nazwe pliku odczytu: ");
                         filename = Console.ReadLine();
-                        libraryManager = (LibraryManager) MyXmlSerializer.ReadFile(typeof(LibraryManager), filename);
+                        libraryManager = (LibraryManager)MyXmlSerializer.ReadFile(typeof(LibraryManager), filename);
                         komunikat = "Odczytano z " + filename + '\n';
                         break;
                     case '4':
                         Console.WriteLine("Podaj nazwe pliku odczytu: ");
                         filename = Console.ReadLine();
-                        //stream = File.Open(filename, FileMode.Open);
-                        //stream.Position = 0;
-                        using (FileStream my_stream = File.Open(filename, FileMode.Open))
-                        {
-                            c1 = (Class1)serializer.Deserialize(my_stream, true);
-                        }
-                            //stream.Dispose();
-                        //stream.Close();
+                        c1 = (Class1) CustomSerialization.ReadFile(filename) ;
                         komunikat = "Odczytano z " + filename + '\n';
                         break;
                     case '5':
@@ -107,6 +108,6 @@ class Program
             }
 
         }
-    
+
     }
 }
