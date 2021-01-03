@@ -59,10 +59,6 @@
       <Project>{7b29072e-07f1-4181-950c-dd83b6520fe1}</Project>
       <Name>Serialization</Name>
     </ProjectReference>
-    <ProjectReference Include="..\TP1copy\TP1copy.csproj">
-      <Project>{07fab965-a0ff-481d-b1f9-70646401f5ba}</Project>
-      <Name>TP1copy</Name>
-    </ProjectReference>
     <ProjectReference Include="..\TP1\TP1.csproj">
       <Project>{58a20179-6c85-48f0-910b-3e7a8010035c}</Project>
       <Name>TP1</Name>

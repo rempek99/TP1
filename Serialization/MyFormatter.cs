@@ -57,7 +57,7 @@ namespace Serialization
                     }
                     else if (TypeKeyValue[2].Contains("ref"))
                     {
-                        Console.WriteLine("REFERENCJA");
+                        //Console.WriteLine("REFERENCJA");
                     }
                     else
                     {
