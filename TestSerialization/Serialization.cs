@@ -9,7 +9,7 @@ using TP1.Model;
 
 namespace TestSerialization
 {
-    [TestClass]
+   // [TestClass]
     public class Serialization
     {
         [TestMethod]
