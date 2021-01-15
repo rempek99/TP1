@@ -10,7 +10,7 @@ namespace TP1_test
 {
     public class DataReaderFromFileTest
     {
-        //[Fact]
+        [Fact]
         public void XMLReaderTest()
         {
             // Data.xml file contains info about 3 readers, 2 bookItems, 2 copyInfos, 2 borrowings and 2 puchaces

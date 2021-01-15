@@ -56,18 +56,21 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\..\TP1\TP1.csproj">
+      <Project>{93f6980a-826c-424c-a130-651edbd6b5cb}</Project>
+      <Name>TP1</Name>
+    </ProjectReference>
     <ProjectReference Include="..\SampleClasses\SampleClasses.csproj">
-      <Project>{a4869fc0-eb55-409c-9b2f-30f46a14d214}</Project>
+      <Project>{014d6e5d-1c67-4ace-8b56-c2c59620c37f}</Project>
       <Name>SampleClasses</Name>
     </ProjectReference>
     <ProjectReference Include="..\Serialization\Serialization.csproj">
       <Project>{7b29072e-07f1-4181-950c-dd83b6520fe1}</Project>
       <Name>Serialization</Name>
     </ProjectReference>
-    <ProjectReference Include="..\TP1\TP1.csproj">
-      <Project>{58a20179-6c85-48f0-910b-3e7a8010035c}</Project>
-      <Name>TP1</Name>
-    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <WCFMetadata Include="Connected Services\" />
   </ItemGroup>
   <Import Project="$(VSToolsPath)\TeamTest\Microsoft.TestTools.targets" Condition="Exists('$(VSToolsPath)\TeamTest\Microsoft.TestTools.targets')" />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

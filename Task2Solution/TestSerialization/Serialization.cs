@@ -2,14 +2,13 @@
 using SampleClasses;
 using Serialization;
 using System;
-using System.IO;
 using System.Linq;
 using TP1.Logic;
 using TP1.Model;
 
 namespace TestSerialization
 {
-   // [TestClass]
+    [TestClass]
     public class Serialization
     {
         [TestMethod]

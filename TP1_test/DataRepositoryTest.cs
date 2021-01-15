@@ -6,7 +6,7 @@ namespace TP1_test
 {
     public class EntitiesTest
     {
-       // [Fact]
+        [Fact]
         public void ReaderTest()
         {
             string name1 = "Jan", lastName1 = "Kowalski";
@@ -15,7 +15,7 @@ namespace TP1_test
             Assert.Contains(name1, tester.ToString());
             Assert.True(tester.Equals(testerCopy));
         }
-      //  [Fact]
+        [Fact]
         public void BookItemTest()
         {
             string title1 = "Dziady", author1 = "Adam Mickiewicz";
@@ -24,7 +24,7 @@ namespace TP1_test
             Assert.Contains(title1, tester.ToString());
             Assert.True(tester.Equals(testerCopy));
         }
-     //   [Fact]
+        [Fact]
         public void CopyInfoTest()
         {
             Random rnd = new Random();
@@ -37,7 +37,7 @@ namespace TP1_test
             Assert.Contains(title1, testCopy.ToString());
             Assert.True(testCopy.Equals(testCopyOfCopy));
         }
-      //  [Fact]
+        [Fact]
         public void EventTest()
         {
             Random rnd = new Random();
@@ -71,7 +71,7 @@ namespace TP1_test
         public class DataRepositoryTest
     {
 
-    //    [Fact]
+      [Fact]
         public void ReaderOperations()
         {
             IDataReaderFromFile fileReader = null;
@@ -91,8 +91,7 @@ namespace TP1_test
             tmp = rnd.Next(tmp - 1);
             Assert.Equal(tmp, repo.FindReader("Test" + tmp.ToString(), "Sample"));
         }
-
-    //    [Fact]
+       [Fact]
         public void BookItemOperations()
         {
             IDataReaderFromFile reader = null;
@@ -115,7 +114,7 @@ namespace TP1_test
             tmp = rnd.Next(tmp - 1);
             Assert.Equal(tmp + startKey, repo.FindBookItem("Test" + tmp.ToString(), "Sample"));
         }
-   //     [Fact]
+       [Fact]
         public void CopyInfoOperations()
         {
             IDataReaderFromFile reader = null;
@@ -145,7 +144,7 @@ namespace TP1_test
             Assert.Equal(0, repo.GetCopyInfosCount());
             Assert.Equal(2, repo.GetBookItemsCount());
         }
-   //     [Fact]
+        [Fact]
         public void BorrowingOperations()
         {
             IDataReaderFromFile reader = null;
