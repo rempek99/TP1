@@ -1,0 +1,15 @@
+D:\Studia\5_SEMESTR\TP\TP1\Task4Solution\Model\bin\Debug\netstandard2.0\Model.deps.json
+D:\Studia\5_SEMESTR\TP\TP1\Task4Solution\Model\bin\Debug\netstandard2.0\Model.dll
+D:\Studia\5_SEMESTR\TP\TP1\Task4Solution\Model\bin\Debug\netstandard2.0\Model.pdb
+D:\Studia\5_SEMESTR\TP\TP1\Task4Solution\Model\bin\Debug\netstandard2.0\Data.dll
+D:\Studia\5_SEMESTR\TP\TP1\Task4Solution\Model\bin\Debug\netstandard2.0\Logic1.dll
+D:\Studia\5_SEMESTR\TP\TP1\Task4Solution\Model\bin\Debug\netstandard2.0\Logic1.pdb
+D:\Studia\5_SEMESTR\TP\TP1\Task4Solution\Model\bin\Debug\netstandard2.0\Data.pdb
+D:\Studia\5_SEMESTR\TP\TP1\Task4Solution\Model\bin\Debug\netstandard2.0\Data.dll.config
+D:\Studia\5_SEMESTR\TP\TP1\Task4Solution\Model\obj\Debug\netstandard2.0\Model.csprojAssemblyReference.cache
+D:\Studia\5_SEMESTR\TP\TP1\Task4Solution\Model\obj\Debug\netstandard2.0\Model.AssemblyInfoInputs.cache
+D:\Studia\5_SEMESTR\TP\TP1\Task4Solution\Model\obj\Debug\netstandard2.0\Model.AssemblyInfo.cs
+D:\Studia\5_SEMESTR\TP\TP1\Task4Solution\Model\obj\Debug\netstandard2.0\Model.csproj.CoreCompileInputs.cache
+D:\Studia\5_SEMESTR\TP\TP1\Task4Solution\Model\obj\Debug\netstandard2.0\Model.csproj.CopyComplete
+D:\Studia\5_SEMESTR\TP\TP1\Task4Solution\Model\obj\Debug\netstandard2.0\Model.dll
+D:\Studia\5_SEMESTR\TP\TP1\Task4Solution\Model\obj\Debug\netstandard2.0\Model.pdb

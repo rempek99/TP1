@@ -57,9 +57,13 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Task3\Task3.csproj">
-      <Project>{f8d8305d-857b-4225-9bff-622c7630e00c}</Project>
-      <Name>Task3</Name>
+    <ProjectReference Include="..\..\Task4Solution\Data\Data.csproj">
+      <Project>{c695f408-4641-48cb-90ae-a5b599785e8c}</Project>
+      <Name>Data</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\Task4Solution\Logic\Logic.csproj">
+      <Project>{2c0c72db-29d7-4f3e-b432-8f48ee7e17f6}</Project>
+      <Name>Logic</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(VSToolsPath)\TeamTest\Microsoft.TestTools.targets" Condition="Exists('$(VSToolsPath)\TeamTest\Microsoft.TestTools.targets')" />

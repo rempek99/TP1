@@ -1,0 +1,11 @@
+{
+  "version": 2,
+  "dgSpecHash": "AhowFYsT140dUdHIf+OZROyfOKpgFP7AhmTSmD5lZ3VJ5LIp15piTgHNJf4ImCHo8sn5Y/JtipgWbtsqgfBfZQ==",
+  "success": true,
+  "projectFilePath": "D:\\Studia\\5_SEMESTR\\TP\\TP1\\Task4Solution\\Model\\Model.csproj",
+  "expectedPackageFiles": [
+    "C:\\Users\\arkad\\.nuget\\packages\\microsoft.netcore.platforms\\1.1.0\\microsoft.netcore.platforms.1.1.0.nupkg.sha512",
+    "C:\\Users\\arkad\\.nuget\\packages\\netstandard.library\\2.0.3\\netstandard.library.2.0.3.nupkg.sha512"
+  ],
+  "logs": []
+}
