@@ -8,11 +8,26 @@ namespace Logic
     public class QuerySyntax : IDisposable
     {
         private static AdventureWorksDataContext dataContext = new AdventureWorksDataContext();
+
+        public static void AddProduct(Product product)
+        { 
+            dataContext.Product.InsertOnSubmit(product);
+            try
+            {
+                dataContext.SubmitChanges();
+            }
+            catch(Exception e)
+            {
+                Console.WriteLine(e);
+            }
+        }
         public static List<Product> GetAllProducts(int n)
         {
             IEnumerable<Product> products = from product in dataContext.Product
                                             orderby product.ProductID
                                             select product;
+            if (n < 0)
+                return products.ToList();
             return products.Take(n).ToList();
         }
         public static List<Product> GetProductsByName(string namePart)

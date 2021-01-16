@@ -6,9 +6,15 @@ namespace Logic
 {
     public class DataService : IDataService
     {
-        public void addProduct(string name, string productNumber, string color, double StandardCost)
+        public void addProduct(string name, string productNumber, string color, double standardCost, short safetyStockLevel)
         {
-            throw new NotImplementedException();
+            Product p = new Product();
+            p.Name = name;
+            p.ProductNumber = productNumber;
+            p.Color = color;
+            p.StandardCost = (decimal)standardCost;
+            p.SafetyStockLevel = (short)safetyStockLevel;
+            QuerySyntax.AddProduct(p);
         }
 
         public List<Dictionary<string, string>> getAll(int pageSize)
@@ -18,10 +24,15 @@ namespace Logic
             foreach (Product p in products)
             {
                 Dictionary<String, String> currentProductData = new Dictionary<string, string>();
+                currentProductData.Add("ProductID", p.ProductID.ToString());
                 currentProductData.Add("Name", p.Name);
                 currentProductData.Add("ProductNumber", p.ProductNumber);
-                currentProductData.Add("Color", p.Color);
+                if (p.Color == null)
+                    currentProductData.Add("Color", "Unknown");
+                else
+                    currentProductData.Add("Color", p.Color);
                 currentProductData.Add("StandardCost", p.StandardCost.ToString());
+                currentProductData.Add("SafetyStockLevel", p.SafetyStockLevel.ToString());
                 outputData.Add(currentProductData);
             }
             return outputData;

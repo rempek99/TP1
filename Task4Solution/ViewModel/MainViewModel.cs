@@ -16,6 +16,7 @@ namespace ViewModel
             m_dataContext = new DataContext();
             m_Products = m_dataContext.products;
             m_CurrentProduct = m_Products[0];
+            AddSampleProduct = new MyCommand(() => m_dataContext.addProduct(new Product(99, "test", "333-92", "Red", 20.12, 200)));
         }
 
         public event PropertyChangedEventHandler PropertyChanged;
@@ -26,7 +27,7 @@ namespace ViewModel
             set
             {
                 m_Products = value;
-                onPropertyChanged(nameof(Products));
+                onPropertChanged(nameof(Products));
             }
         }
         public Product CurrentProduct
@@ -35,10 +36,13 @@ namespace ViewModel
             set
             {
                 m_CurrentProduct = value;
-                onPropertyChanged(nameof(CurrentProduct));
+                onPropertChanged(nameof(CurrentProduct));
             }
         }
-
+        public MyCommand AddSampleProduct
+        {
+            get; private set;
+        }
 
         public DataContext dataContext
         {
@@ -50,7 +54,7 @@ namespace ViewModel
             }
         }
 
-       private void onPropertyChanged(string propertName)
+       private void onPropertChanged(string propertName)
         {
             if(PropertyChanged != null)
             {

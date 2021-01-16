@@ -13,11 +13,7 @@ namespace Model
         public DataContext()
         {
             this.dataService = new DataService();
-            products = convertData(dataService.getAll(100));
-          /*  products = new ObservableCollection<Product>();
-
-            products.Add(new Product("Product1", "123", "Black", 20.99));
-            products.Add(new Product("Product2", "222", "White", 2.99));*/
+            products = convertData(dataService.getAll(-1));
         }
 
         private ObservableCollection<Product> convertData(List<Dictionary<String,String>> data)
@@ -25,10 +21,15 @@ namespace Model
             ObservableCollection<Product> converted = new ObservableCollection<Product>();
             foreach(Dictionary<String,String> currentProduct in data)
             {
-                Product p = new Product(currentProduct["Name"], currentProduct["ProductNumber"], currentProduct["Color"], Double.Parse(currentProduct["StandardCost"]));
+                Product p = new Product(Int32.Parse(currentProduct["ProductID"]), currentProduct["Name"], currentProduct["ProductNumber"], currentProduct["Color"], Double.Parse(currentProduct["StandardCost"]), short.Parse(currentProduct["SafetyStockLevel"]));
                 converted.Add(p);
             }
             return converted;
+        }
+        public void addProduct(Product product)
+        {
+            dataService.addProduct(product.Name, product.ProductNumber, product.Color, product.StandardCost, product.SafetyStockLevel);
+            products = convertData(dataService.getAll(-1));
         }
     }
 }

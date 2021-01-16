@@ -11,15 +11,78 @@
         <vm:MainViewModel/>
     </Window.DataContext>
     <Grid>
-        <ListBox ItemsSource="{Binding Products}" SelectedItem="{Binding CurrentProduct}" HorizontalAlignment="Left" Height="100" Margin="10,10,0,0" VerticalAlignment="Top" Width="774">
+        <ListBox ItemsSource="{Binding Products}" SelectedItem="{Binding CurrentProduct}" HorizontalAlignment="Left" Height="200" Margin="10,10,0,0" VerticalAlignment="Top" Width="774">
             <ListBox.ItemTemplate>
                 <DataTemplate  >
                     <StackPanel Orientation="Vertical">
+                        <Label Content="{Binding ProductID}"/>
                         <Label Content="{Binding Name}"/>
                     </StackPanel>
                 </DataTemplate>
             </ListBox.ItemTemplate>
-        </ListBox>
-
+        </ListBox >
+        <FlowDocumentReader Margin="10,110,0,0" ViewingMode="Scroll" Height="100">
+            <FlowDocument   FontFamily="Courier-New"
+    FontSize="12">
+                <Table CellSpacing="2">
+                    <TableRowGroup>
+                        <TableRow >
+                            <TableCell TextAlignment="Center" >
+                                <Paragraph FontWeight="Bold">ProductID</Paragraph>
+                            </TableCell>
+                            <TableCell TextAlignment="Center" >
+                                <Paragraph FontWeight="Bold">Name</Paragraph>
+                            </TableCell>
+                            <TableCell TextAlignment="Center">
+                                <Paragraph FontWeight="Bold">Product Number</Paragraph>
+                            </TableCell>
+                            <TableCell TextAlignment="Center">
+                                <Paragraph FontWeight="Bold">Color</Paragraph>
+                            </TableCell>
+                            <TableCell TextAlignment="Center">
+                                <Paragraph FontWeight="Bold">Standard Cost</Paragraph>
+                            </TableCell>
+                            <TableCell TextAlignment="Center">
+                                <Paragraph FontWeight="Bold">Safety Stock Level</Paragraph>
+                            </TableCell>
+                        </TableRow>
+                        <TableRow>
+                            <TableCell TextAlignment="Center">
+                                <Paragraph >
+                                    <Run Text="{Binding CurrentProduct.ProductID}"/>
+                                </Paragraph>
+                            </TableCell>
+                            <TableCell TextAlignment="Center">
+                                <Paragraph >
+                                    <Run Text="{Binding CurrentProduct.Name}"/>
+                                </Paragraph>
+                            </TableCell>
+                            <TableCell TextAlignment="Center">
+                                <Paragraph>
+                                    <Run Text="{Binding CurrentProduct.ProductNumber}"/>
+                                </Paragraph>
+                            </TableCell>
+                            <TableCell TextAlignment="Center">
+                                <Paragraph>
+                                    <Run Text="{Binding CurrentProduct.Color}"/>
+                                </Paragraph>
+                            </TableCell>
+                            <TableCell TextAlignment="Center">
+                                <Paragraph>
+                                    <Run Text="{Binding CurrentProduct.StandardCost}"/>
+                                </Paragraph>
+                            </TableCell>
+                            <TableCell TextAlignment="Center">
+                                <Paragraph>
+                                    <Run Text="{Binding CurrentProduct.SafetyStockLevel}"/>
+                                </Paragraph>
+                            </TableCell>
+                        </TableRow>
+                    </TableRowGroup>
+                </Table>
+            </FlowDocument>
+        </FlowDocumentReader>
+        <Button Command="{Binding AddSampleProduct}" Content="Add Sample"
+                HorizontalAlignment="Left" Height="20" Margin="10,350,0,0" VerticalAlignment="Top" Width="80"/>
     </Grid>
 </Window>
