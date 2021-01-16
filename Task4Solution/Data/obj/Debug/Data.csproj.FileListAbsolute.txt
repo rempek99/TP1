@@ -1,7 +1,0 @@
-D:\Studia\5_SEMESTR\TP\TP1\Task4Solution\Data\bin\Debug\Data.dll.config
-D:\Studia\5_SEMESTR\TP\TP1\Task4Solution\Data\bin\Debug\Data.dll
-D:\Studia\5_SEMESTR\TP\TP1\Task4Solution\Data\bin\Debug\Data.pdb
-D:\Studia\5_SEMESTR\TP\TP1\Task4Solution\Data\obj\Debug\Data.csprojAssemblyReference.cache
-D:\Studia\5_SEMESTR\TP\TP1\Task4Solution\Data\obj\Debug\Data.csproj.CoreCompileInputs.cache
-D:\Studia\5_SEMESTR\TP\TP1\Task4Solution\Data\obj\Debug\Data.dll
-D:\Studia\5_SEMESTR\TP\TP1\Task4Solution\Data\obj\Debug\Data.pdb

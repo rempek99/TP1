@@ -9,7 +9,7 @@ namespace Logic
     {
         private static AdventureWorksDataContext dataContext = new AdventureWorksDataContext();
 
-        public static void AddProduct(Product product)
+        public static string AddProduct(Product product)
         { 
             dataContext.Product.InsertOnSubmit(product);
             try
@@ -18,8 +18,53 @@ namespace Logic
             }
             catch(Exception e)
             {
-                Console.WriteLine(e);
+                dataContext.Product.DeleteOnSubmit(product);
+                return "Product already exists";
             }
+            return "Product added";
+        }
+        public static string RemoveProductByName(String productName)
+        {
+            var remove      = (from product in dataContext.Product
+                                            where product.Name.Equals(productName)
+                                            orderby product.ProductID
+                                            select product).FirstOrDefault();
+
+            if (remove != null)
+            {
+                dataContext.Product.DeleteOnSubmit(remove);
+                try
+                {
+                    dataContext.SubmitChanges();
+                }
+                catch (Exception e)
+                {
+                    dataContext.Product.InsertOnSubmit(remove);
+                    return "Product do not exists";
+                }
+            }
+            return "Product removed";
+
+        }
+        public static string UpdateProduct(Product product)
+        {
+            var update = (from p in dataContext.Product
+                          where p.ProductID == product.ProductID
+                          select p).SingleOrDefault();
+            update.Name = product.Name;
+            update.ProductNumber = product.ProductNumber;
+            update.Color = product.Color;
+            update.StandardCost = product.StandardCost;
+            update.SafetyStockLevel = product.SafetyStockLevel;
+            try
+            {
+                dataContext.SubmitChanges();
+            }
+            catch
+            {
+                return "Changes not saved";
+            }
+            return "Changes saved";
         }
         public static List<Product> GetAllProducts(int n)
         {

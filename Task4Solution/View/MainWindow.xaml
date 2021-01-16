@@ -78,11 +78,48 @@
                                 </Paragraph>
                             </TableCell>
                         </TableRow>
+                           <TableRow>
+                            <TableCell TextAlignment="Center">
+                                <Paragraph >
+                                    <TextBox x:Name="ProductID" Text="{Binding  CurrentProduct.ProductID}" IsEnabled="False"/>
+                                </Paragraph>
+                            </TableCell>
+                            <TableCell TextAlignment="Center">
+                                <Paragraph >
+                                    <TextBox x:Name="Name" Text="{Binding  CurrentProduct.Name, Mode=TwoWay}" />
+                                </Paragraph>
+                            </TableCell>
+                            <TableCell TextAlignment="Center">
+                                <Paragraph>
+                                    <TextBox x:Name="ProductNumber" Text="{Binding  CurrentProduct.ProductNumber}"/>
+                                </Paragraph>
+                            </TableCell>
+                            <TableCell TextAlignment="Center">
+                                <Paragraph>
+                                    <TextBox x:Name="Color" Text="{Binding  CurrentProduct.Color}"/>
+                                </Paragraph>
+                            </TableCell>
+                            <TableCell TextAlignment="Center">
+                                <Paragraph>
+                                    <TextBox x:Name="StandardCost" Text="{Binding  CurrentProduct.StandardCost}"/>
+                                </Paragraph>
+                            </TableCell>
+                            <TableCell TextAlignment="Center">
+                                <Paragraph>
+                                    <TextBox x:Name="SafetyStockLevel" Text="{Binding  CurrentProduct.SafetyStockLevel}"/>
+                                </Paragraph>
+                            </TableCell>
+                        </TableRow>
                     </TableRowGroup>
                 </Table>
             </FlowDocument>
         </FlowDocumentReader>
         <Button Command="{Binding AddSampleProduct}" Content="Add Sample"
                 HorizontalAlignment="Left" Height="20" Margin="10,350,0,0" VerticalAlignment="Top" Width="80"/>
+        <Button Command="{Binding RemoveSampleProduct}" Content="Remove Sample"
+                HorizontalAlignment="Left" Height="20" Margin="100,350,0,0" VerticalAlignment="Top" Width="80"/>
+        <Button Command="{Binding UpdateSampleProduct}" Content="Update Sample"
+                HorizontalAlignment="Left" Height="20" Margin="190,350,0,0" VerticalAlignment="Top" Width="80"/>
+        <Label Content="{Binding CurrentMessage}" HorizontalAlignment="Left" Height="40" Margin="10,380,0,0" VerticalAlignment="Top" Width="400"/>
     </Grid>
 </Window>

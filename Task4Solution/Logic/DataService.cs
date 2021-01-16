@@ -6,15 +6,19 @@ namespace Logic
 {
     public class DataService : IDataService
     {
-        public void addProduct(string name, string productNumber, string color, double standardCost, short safetyStockLevel)
+        public string addProduct(string name, string productNumber, string color, double standardCost, short safetyStockLevel)
         {
             Product p = new Product();
+            p.ProductID = 0;
             p.Name = name;
             p.ProductNumber = productNumber;
             p.Color = color;
             p.StandardCost = (decimal)standardCost;
             p.SafetyStockLevel = (short)safetyStockLevel;
-            QuerySyntax.AddProduct(p);
+            p.SellStartDate = DateTime.Now;
+            p.ModifiedDate = DateTime.Now;
+            p.ReorderPoint = 600;
+            return QuerySyntax.AddProduct(p);
         }
 
         public List<Dictionary<string, string>> getAll(int pageSize)
@@ -43,9 +47,20 @@ namespace Logic
             throw new NotImplementedException();
         }
 
-        public void removeProduct(string name)
+        public string removeProduct(string name)
         {
-            throw new NotImplementedException();
+            return QuerySyntax.RemoveProductByName(name);
+        }
+        public string updateProduct(int productID, string name, string productNumber, string color, double standardCost, short safetyStockLevel)
+        {
+            Product p = new Product();
+            p.ProductID = productID;
+            p.Name = name;
+            p.ProductNumber = productNumber;
+            p.Color = color;
+            p.StandardCost = (decimal)standardCost;
+            p.SafetyStockLevel = safetyStockLevel;
+            return QuerySyntax.UpdateProduct(p);
         }
     }
 }

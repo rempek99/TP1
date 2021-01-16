@@ -26,10 +26,23 @@ namespace Model
             }
             return converted;
         }
-        public void addProduct(Product product)
+        public string addProduct(Product product)
         {
-            dataService.addProduct(product.Name, product.ProductNumber, product.Color, product.StandardCost, product.SafetyStockLevel);
+            string message = dataService.addProduct(product.Name, product.ProductNumber, product.Color, product.StandardCost, product.SafetyStockLevel);
             products = convertData(dataService.getAll(-1));
+            return message;
+        }
+        public string removeProduct(String name)
+        {
+            string message = dataService.removeProduct(name);
+            products = convertData(dataService.getAll(-1));
+            return message;
+        }
+        public string updateProduct(Product product)
+        {
+            string message = dataService.updateProduct(product.ProductID, product.Name, product.ProductNumber, product.Color, product.StandardCost, product.SafetyStockLevel);
+            products = convertData(dataService.getAll(-1));
+            return message;
         }
     }
 }
