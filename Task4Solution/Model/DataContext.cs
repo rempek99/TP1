@@ -7,12 +7,17 @@ namespace Model
 {
     public class DataContext
     {
-        public IDataService dataService;
+        public IDataService dataService { get; set; }
         public ObservableCollection<Product> products { get; set; }
 
         public DataContext()
         {
             this.dataService = new DataService();
+            products = convertData(dataService.getAll(-1));
+        }
+        public DataContext(IDataService dataService)
+        {
+            this.dataService = dataService;
             products = convertData(dataService.getAll(-1));
         }
 
@@ -26,6 +31,12 @@ namespace Model
             }
             return converted;
         }
+
+        public void setDataService(object obj)
+        {
+            this.dataService = (IDataService) obj;
+        }
+
         public string addProduct(Product product)
         {
             string message = dataService.addProduct(product.Name, product.ProductNumber, product.Color, product.StandardCost, product.SafetyStockLevel);
@@ -40,8 +51,16 @@ namespace Model
         }
         public string updateProduct(Product product)
         {
-            string message = dataService.updateProduct(product.ProductID, product.Name, product.ProductNumber, product.Color, product.StandardCost, product.SafetyStockLevel);
-            products = convertData(dataService.getAll(-1));
+            string message = "";
+            try
+            {
+                message = dataService.updateProduct(product.ProductID, product.Name, product.ProductNumber, product.Color, product.StandardCost, product.SafetyStockLevel);
+                products = convertData(dataService.getAll(-1));
+            }
+            catch (NullReferenceException)
+            {
+                return "Firstly add product";
+            }
             return message;
         }
     }

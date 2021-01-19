@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
+using System.Threading.Tasks;
 using System.Windows.Input;
 
 namespace ViewModel
@@ -23,7 +24,10 @@ namespace ViewModel
 
         public void Execute(object parameter)
         {
-            this.m_action();
+            Task.Run(() =>
+            {
+                this.m_action();
+            });
         }
 
         

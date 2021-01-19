@@ -24,6 +24,17 @@ namespace ViewModel
             RemoveSampleProduct = new MyCommand(() => { CurrentMessage = m_dataContext.removeProduct("test"); Products = m_dataContext.products; });
             UpdateSampleProduct = new MyCommand(() => { CurrentMessage = m_dataContext.updateProduct(CurrentProduct); Products = m_dataContext.products; });
         }
+        public MainViewModel(DataContext myDataContext)
+        {
+            m_dataContext = myDataContext;
+            m_Products = m_dataContext.products;
+            m_CurrentProduct = m_Products[0];
+            //  EditedProduct = CurrentProduct;
+            m_CurrentMessage = "Welcome";
+            AddSampleProduct = new MyCommand(() => { CurrentMessage = m_dataContext.addProduct(new Product(99, "test", "333-92", "Red", 20.12, 200)); Products = m_dataContext.products; });
+            RemoveSampleProduct = new MyCommand(() => { CurrentMessage = m_dataContext.removeProduct("test"); Products = m_dataContext.products; });
+            UpdateSampleProduct = new MyCommand(() => { CurrentMessage = m_dataContext.updateProduct(CurrentProduct); Products = m_dataContext.products; });
+        }
 
         public event PropertyChangedEventHandler PropertyChanged;
 

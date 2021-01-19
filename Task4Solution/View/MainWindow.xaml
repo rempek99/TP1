@@ -86,7 +86,7 @@
                             </TableCell>
                             <TableCell TextAlignment="Center">
                                 <Paragraph >
-                                    <TextBox x:Name="Name" Text="{Binding  CurrentProduct.Name, Mode=TwoWay}" />
+                                    <TextBox x:Name="Name" Text="{Binding  CurrentProduct.Name}" />
                                 </Paragraph>
                             </TableCell>
                             <TableCell TextAlignment="Center">
